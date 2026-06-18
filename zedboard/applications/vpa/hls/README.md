@@ -7,7 +7,7 @@ Run the HLS-based IP generation flow with the following steps (Vitis HLS v2021.2
 2. Run the Tcl script:
 
    ```bash
-   vitis_hls -f run_hls.tcl
+   vitis_hls -f run_hls.tcl -nolog
    ```
 
 3. Open the generated IP project:

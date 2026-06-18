@@ -49,7 +49,7 @@ set_top top_module
 # Create a solution
 open_solution -reset solution1 -flow_target vivado
 # Define the technology and clock rate (*** TO BE SET BY THE USER ***)
-set_part  {xck26-sfvc784-2LV-c}
+set_part  {xc7z020clg484-1}
 create_clock -period "350MHz"
 config_compile -enable_auto_rewind=0
 
