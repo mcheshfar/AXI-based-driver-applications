@@ -15,27 +15,28 @@
 #define IOCTL_DMA_RESET _IOW(DMA_MAGIC, 5, size_t)
 #define IOCTL_DMA_RESET_ALL _IOW(DMA_MAGIC, 6, size_t)
 
-
-
 #define DEVICE_FILE "/dev/uniss_dma"
 #define DMA_BUF_SIZE 65535
 
+// Definisci qui il numero di iterazioni desiderate
+#define N_ITER 1000
+
 void print_mem(void *virtual_address, int byte_count)
 {
-	char *data_ptr = virtual_address;
+    char *data_ptr = virtual_address;
 
-	for (int i = 0; i < byte_count; i++)
-	{
-		printf("%02X", data_ptr[i]);
+    for (int i = 0; i < byte_count; i++)
+    {
+        printf("%02X", (unsigned char)data_ptr[i]);
 
-		// print a space every 4 bytes (0 indexed)
-		if (i % 4 == 3)
-		{
-			printf(" ");
-		}
-	}
+        // print a space every 4 bytes (0 indexed)
+        if (i % 4 == 3)
+        {
+            printf(" ");
+        }
+    }
 
-	printf("\n");
+    printf("\n");
 }
 
 int main() {
@@ -45,249 +46,171 @@ int main() {
         return 1;
     }
 
-    int channel = 0;
-    if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
-        perror("Failed to select DMA channel");
-        close(fd);
-        return 1;
-    }
-
-    // Prepare dummy data
-    printf("Memory map the MM2S source address register blocks:\nTEXT\nKEY\nRC\1n");
-	unsigned int *virtual_src_TEXT_addr = (unsigned int*)malloc(65535);
-	unsigned int *virtual_src_KEY_addr = (unsigned int*)malloc(65535);
-
-	printf("Memory map the S2MM destination address register block:\nENCRYPTED\n");
-	unsigned int *virtual_dst_ENCRYPTED_addr = (unsigned int*)malloc(65535);
-
-    printf("Writing text, key and rc  data to userspace source buffers...\n");
-	// text data FFEEDDCCBBAA99887766554433221100
-	unsigned int j = 0x00000000;
-	// 16 * 32 bit word = 16 * 4 word
-	for (int i = 0; i < 16; ++i)
-	{
-		virtual_src_TEXT_addr[i] = j;
-		j = j + 0x11;
-	}
-	j = 0x00000000;
-	// key data 1F1E1D1C1B1A191817161514131211100F0E0D0C0B0A09080706050403020100
-	for (int i = 0; i < 32; ++i)
-	{
-		virtual_src_KEY_addr[i] = j;
-		j = j + 0x1;
-	}
-
-	// 16 * 4 byte = 16 * 32 bit
-	printf("Clearing the destination register block...\n");
-	memset(virtual_dst_ENCRYPTED_addr, 0, 16 * 4);
-
-	// print
-	printf("Text memory block data:      ");
-	print_mem(virtual_src_TEXT_addr, 16 * 4);
-	printf("Key memory block data:       ");
-	print_mem(virtual_src_KEY_addr, 32 * 4);
-
-	printf("Destination memory block data: ");
-	print_mem(virtual_dst_ENCRYPTED_addr, 16 * 4);
-
-    if (ioctl(fd, IOCTL_DMA_WRITE_BUFFER, virtual_src_TEXT_addr) < 0) {
-        perror("Failed to write buffer to DMA");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    printf("DMA buffer written successfully.\n");
-
-    channel = 1;
-    if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
-        perror("Failed to select DMA channel");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    if (ioctl(fd, IOCTL_DMA_WRITE_BUFFER, virtual_src_KEY_addr) < 0) {
-        perror("Failed to write buffer to DMA");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    printf("DMA buffer written successfully.\n");
-
-    channel = 0;
-    if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
-        perror("Failed to select DMA channel");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    if (ioctl(fd, IOCTL_DMA_RESET_ALL, channel) < 0) {
-        perror("Failed to select DMA channel");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    if (ioctl(fd, IOCTL_DMA_START_TRANSFER, 16) < 0) {
-        perror("Failed to start DMA transfer");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    printf("DMA transfer started.\n");
-
-    channel = 1;
-    if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
-        perror("Failed to select DMA channel");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    if (ioctl(fd, IOCTL_DMA_START_TRANSFER, 32) < 0) {
-        perror("Failed to start DMA transfer");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    printf("DMA transfer started.\n");
-
-    channel = 2;
-    if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
-        perror("Failed to select DMA channel");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    if (ioctl(fd, IOCTL_DMA_START_TRANSFER, 16) < 0) {
-        perror("Failed to start DMA transfer");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    printf("DMA transfer started.\n");
-
+    // =========================================================================
+    // ALLOCAZIONI E INIZIALIZZAZIONI (Eseguite UNA sola volta fuori dal loop)
+    // =========================================================================
+    printf("Allocating DMA buffers in userspace...\n");
+    unsigned int *virtual_src_TEXT_addr = (unsigned int*)malloc(DMA_BUF_SIZE);
+    unsigned int *virtual_src_KEY_addr = (unsigned int*)malloc(DMA_BUF_SIZE);
+    unsigned int *virtual_dst_ENCRYPTED_addr = (unsigned int*)malloc(DMA_BUF_SIZE);
+    
     unsigned int *buffer = (unsigned int*)malloc(sizeof(unsigned int));
+    unsigned char *char_encr = (unsigned char*)malloc(DMA_BUF_SIZE);
 
-    channel = 0;
-    if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
-        perror("Failed to select DMA channel");
+    if (!virtual_src_TEXT_addr || !virtual_src_KEY_addr || !virtual_dst_ENCRYPTED_addr || !buffer || !char_encr) {
+        perror("Failed to allocate buffers");
         free(virtual_src_TEXT_addr);
         free(virtual_src_KEY_addr);
         free(virtual_dst_ENCRYPTED_addr);
+        free(buffer);
+        free(char_encr);
         close(fd);
         return 1;
     }
 
-    do{
-    
-        if (ioctl(fd, IOCTL_READ_STATUS_REGISTER, buffer) < 0) {
-            perror("Failed to check status register");
-            free(virtual_src_TEXT_addr);
-            free(virtual_src_KEY_addr);
-            free(virtual_dst_ENCRYPTED_addr);
-            close(fd);
-            return 1;
+    // Inizializzazione KEY (Resta fissa per tutte le iterazioni)
+    unsigned int j = 0x00000000;
+    for (int i = 0; i < 32; ++i)
+    {
+        virtual_src_KEY_addr[i] = j;
+        j = j + 0x1;
+    }
+
+    // Array dei canali da controllare nell'ordine corretto di polling
+    int channels_to_poll[] = {2, 0, 1}; 
+
+    printf("Starting loop of %d iterations...\n", N_ITER);
+
+    // =========================================================================
+    // LOOP PRINCIPALE DELLE ITERAZIONI
+    // =========================================================================
+    for (int iter = 0; iter < N_ITER; ++iter) {
+        
+        // Rigenerazione dei dati TEXT ad ogni iterazione
+        j = 0x00000000;
+        for (int i = 0; i < 16; ++i)
+        {
+            virtual_src_TEXT_addr[i] = j;
+            j = j + 0x11;
         }
 
-    } while(!(*buffer & (unsigned int)0x2));
+        // Reset del buffer di destinazione locale
+        memset(virtual_dst_ENCRYPTED_addr, 0, 16 * 4);
 
-    channel = 1;
-    if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
-        perror("Failed to select DMA channel");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
+        // Se l'output a terminale rallenta troppo il loop, puoi commentare queste stampe
+        printf("\n--- Iteration %d/%d ---\n", iter + 1, N_ITER);
+        printf("Text memory block data:      ");
+        print_mem(virtual_src_TEXT_addr, 16 * 4);
+        printf("Key memory block data:       ");
+        print_mem(virtual_src_KEY_addr, 32 * 4);
 
-    do{
-    
-        if (ioctl(fd, IOCTL_READ_STATUS_REGISTER, buffer) < 0) {
-            perror("Failed to check status register");
-            free(virtual_src_TEXT_addr);
-            free(virtual_src_KEY_addr);
-            free(virtual_dst_ENCRYPTED_addr);
-            close(fd);
-            return 1;
+        // -----------------------------------------------------------------
+        // CARICAMENTO BUFFER NEI DRIVER DMA
+        // -----------------------------------------------------------------
+        int channel = 0;
+        if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
+            perror("Failed to select DMA channel 0");
+            goto loop_error;
+        }
+        if (ioctl(fd, IOCTL_DMA_WRITE_BUFFER, virtual_src_TEXT_addr) < 0) {
+            perror("Failed to write TEXT buffer to DMA");
+            goto loop_error;
         }
 
-    } while(!(*buffer & (unsigned int)0x2));
-
-    channel = 2;
-    if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
-        perror("Failed to select DMA channel");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
-    }
-
-    do{
-    
-        if (ioctl(fd, IOCTL_READ_STATUS_REGISTER, buffer) < 0) {
-            perror("Failed to check status register");
-            free(virtual_src_TEXT_addr);
-            free(virtual_src_KEY_addr);
-            free(virtual_dst_ENCRYPTED_addr);
-            close(fd);
-            return 1;
+        channel = 1;
+        if (ioctl(fd, IOCTL_SELECT_CHANNEL, channel) < 0) {
+            perror("Failed to select DMA channel 1");
+            goto loop_error;
+        }
+        if (ioctl(fd, IOCTL_DMA_WRITE_BUFFER, virtual_src_KEY_addr) < 0) {
+            perror("Failed to write KEY buffer to DMA");
+            goto loop_error;
         }
 
-    } while(!(*buffer & (unsigned int)0x2));
+        // Reset logico dell'hardware prima del trasferimento
+        channel = 0;
+        ioctl(fd, IOCTL_SELECT_CHANNEL, channel);
+        if (ioctl(fd, IOCTL_DMA_RESET_ALL, channel) < 0) {
+            perror("Failed to reset DMAs");
+            goto loop_error;
+        }
 
+        // -----------------------------------------------------------------
+        // AVVIO TRASFERIMENTI (Sequenza specifica Zedboard)
+        // -----------------------------------------------------------------
+        
+        // 1. Avvia S2MM (Canale 2 - Ricezione)
+        channel = 2;
+        ioctl(fd, IOCTL_SELECT_CHANNEL, channel);
+        if (ioctl(fd, IOCTL_DMA_START_TRANSFER, 16) < 0) {
+            perror("Failed to start S2MM DMA transfer");
+            goto loop_error;
+        }
 
+        // 2. Avvia MM2S (Canale 0 - TEXT)
+        channel = 0;
+        ioctl(fd, IOCTL_SELECT_CHANNEL, channel);
+        if (ioctl(fd, IOCTL_DMA_START_TRANSFER, 16) < 0) {
+            perror("Failed to start MM2S TEXT transfer");
+            goto loop_error;
+        }
 
-    unsigned char *char_encr = (unsigned char*)malloc(65535);
+        // 3. Avvia MM2S (Canale 1 - KEY)
+        channel = 1;
+        ioctl(fd, IOCTL_SELECT_CHANNEL, channel);
+        if (ioctl(fd, IOCTL_DMA_START_TRANSFER, 32) < 0) {
+            perror("Failed to start MM2S KEY transfer");
+            goto loop_error;
+        }
 
-    if (ioctl(fd, IOCTL_DMA_READ_BUFFER, char_encr) < 0) {
-        perror("Failed to check status register");
-        free(virtual_src_TEXT_addr);
-        free(virtual_src_KEY_addr);
-        free(virtual_dst_ENCRYPTED_addr);
-        close(fd);
-        return 1;
+        // -----------------------------------------------------------------
+        // POLLING DI STATO CON SICUREZZA ERRORI
+        // -----------------------------------------------------------------
+        for (int i = 0; i < 3; i++) {
+            channel = channels_to_poll[i];
+            ioctl(fd, IOCTL_SELECT_CHANNEL, channel);
+            
+            do {
+                if (ioctl(fd, IOCTL_READ_STATUS_REGISTER, buffer) < 0) {
+                    perror("Failed to check status register");
+                    goto loop_error;
+                }
+
+                if (*buffer & 0x70) {
+                    printf("\n[!] ERRORE FATALE DMA SUL CANALE %d! Registro: 0x%08X\n", channel, *buffer);
+                    goto loop_error;
+                }
+                
+                usleep(10); // Ridotto a 10us (da 1000us) per rendere i cicli molto più veloci
+                
+            } while(!(*buffer & (unsigned int)0x2)); 
+        }
+
+        // -----------------------------------------------------------------
+        // LETTURA DEI DATI CIFRATI
+        // -----------------------------------------------------------------
+        channel = 2;
+        ioctl(fd, IOCTL_SELECT_CHANNEL, channel);
+        if (ioctl(fd, IOCTL_DMA_READ_BUFFER, char_encr) < 0) {
+            perror("Failed to read destination buffer");
+            goto loop_error;
+        }
+
+        memcpy(virtual_dst_ENCRYPTED_addr, char_encr, DMA_BUF_SIZE);
+
+        printf("Destination memory block data: ");
+        print_mem(virtual_dst_ENCRYPTED_addr, 16 * 4);
     }
 
-    memcpy(virtual_dst_ENCRYPTED_addr,char_encr,65535);
+    printf("\n[+] Loop completato con successo senza errori hardware!\n");
 
-    print_mem(char_encr, 16 * 4);
-
-    print_mem(virtual_dst_ENCRYPTED_addr, 16 * 4);
-
+loop_error:
+    // Pulizia finale della memoria
     free(virtual_src_TEXT_addr);
     free(virtual_src_KEY_addr);
     free(virtual_dst_ENCRYPTED_addr);
     free(buffer);
+    free(char_encr);
     close(fd);
     return 0;
 }

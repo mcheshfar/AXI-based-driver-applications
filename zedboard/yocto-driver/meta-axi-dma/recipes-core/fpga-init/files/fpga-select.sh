@@ -17,7 +17,7 @@ read choice
 case "$choice" in
   1)
     echo "Loading AES bitstream..."
-    fpgautil -b ${BITDIR}/aes256_dma.bit || exit 1
+    fpgautil -b ${BITDIR}/aes256_dma.bin || exit 1
     echo "Applying AES overlay..."
     fpgautil -o ${BITDIR}/pl_aes.dtbo || exit 1
     sleep 1
@@ -26,7 +26,7 @@ case "$choice" in
     ;;
   2)
     echo "Loading VPA bitstream..."
-    fpgautil -b ${BITDIR}/vpa_dma.bit || exit 1
+    fpgautil -b ${BITDIR}/vpa_dma.bin || exit 1
     echo "Applying VPA overlay..."
     fpgautil -o ${BITDIR}/pl_vpa.dtbo || exit 1
     sleep 1
