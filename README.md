@@ -25,3 +25,9 @@ Inside each board's directory (`kv260/` and `zedboard/`), the content is structu
 * **`ubuntu-driver/`** *(Available for kv260)*: Contains the specific instructions and source code to compile and install the driver on Ubuntu.
 * **`yocto-driver/`**: Contains the specific instructions and source code to compile and install the driver using the Yocto Project build system.
 * **`applications/`**: Contains examples of hardware accelerators that implement the AXI4-Stream interface described above, including their test applications to verify correct operation.
+
+## Recent Updates
+
+- Added support for AXI4-Lite control interfaces in custom IPs. This enables software configuration of accelerator parameters in addition to AXI4-Stream data transfers.
+- Added an Edge Detection application demonstrating the use of AXI4-Stream data channels together with AXI4-Lite control registers.
+- See the README files inside the corresponding board and application directories for build instructions, hardware integration, and usage examples.
