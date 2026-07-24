@@ -5,7 +5,7 @@ Each subfolder represents a specific use case and contains both the hardware log
 ## Folder contents
 * **`MDC/`**: IP made by MDC tool-chain.
 * **`MDC_MLIR/`**: IP made by MDC tool-chain from MLIR specifications.
-* **`MD_MLIR_merged/`**: IP made by MDC tool-chain from one MLIR specification merged by DFG-MLIR.
+* **`MDC_MLIR_merged/`**: IP made by MDC tool-chain from one MLIR specification merged by DFG-MLIR.
 
 ---
 For specific instructions on how to compile and run individual tests, refer to the README files in each subfolder.
