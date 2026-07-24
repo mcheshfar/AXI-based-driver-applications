@@ -1,3 +1,4 @@
+
 # Edge Detection Accelerator — AXI4-Stream Hardware Accelerator
 
 This project implements a configurable hardware accelerator for image edge detection using the **Roberts** and **Sobel** operators. The accelerator is integrated into a Xilinx Zynq MPSoC system through **AXI4-Stream** interfaces for image transfer and an **AXI4-Lite** interface for accelerator configuration.
@@ -102,17 +103,29 @@ PGM image
 
 ---
 
-## 2. Configure accelerator
+### 2. Configure Accelerator (AXI-Lite)
 
-Before any DMA transfer begins, the accelerator is configured through AXI-Lite registers exposed by the `/dev/uniss_dma` driver.
+Before any DMA transfer begins, the accelerator is configured through the AXI-Lite interface exposed by the `/dev/uniss_dma` driver.
 
-The application writes:
+```c
+struct axi_lite_reg_io reg;
 
-- output image size (REG1)
-- selected kernel (REG0)
-- start command (REG0)
+/* REG1 = number of output pixels */
+reg.offset = ACCEL_REG1;
+reg.value  = out_pixels;
+ioctl(fd, IOCTL_AXILITE_WRITE_REG, &reg);
 
-using the AXI-Lite ioctl interface.
+/* Enable output counter */
+reg.offset = ACCEL_REG0;
+reg.value  = ((uint32_t)kernel << 24) | 0x4;
+ioctl(fd, IOCTL_AXILITE_WRITE_REG, &reg);
+
+/* Start accelerator */
+reg.value  = ((uint32_t)kernel << 24) | 0x1;
+ioctl(fd, IOCTL_AXILITE_WRITE_REG, &reg);
+```
+
+This configures the selected edge detection operator (Roberts or Sobel), programs the expected number of output pixels, and starts the accelerator.
 
 ---
 
@@ -126,53 +139,90 @@ All DMA channels are reset before starting a new execution.
 
 ---
 
-## 4. Start output DMA
+### 4. Prepare Output DMA (S2MM, Channel 2)
 
-The output DMA is started first.
+The output DMA channel is started first so that the accelerator has a valid destination before producing any output data.
 
-```text
-Channel 2 (S2MM)
+```c
+ioctl(fd, IOCTL_SELECT_CHANNEL, 2);
+ioctl(fd, IOCTL_DMA_START_TRANSFER, out_pixels * WORD_BYTES);
 ```
 
-This prepares the output buffer to receive processed pixels.
+This prepares the S2MM DMA channel to receive the processed image from the accelerator.
 
 ---
 
-## 5. Send configuration
 
-The image width is transferred through DMA Channel 1.
+### 5. Send Image Configuration (MM2S, Channel 1)
 
-```text
-Channel 1 (MM2S)
+The image width is transferred through the second MM2S DMA channel.
+
+```c
+ioctl(fd, IOCTL_SELECT_CHANNEL, 1);
+ioctl(fd, IOCTL_DMA_WRITE_BUFFER, (unsigned char *)cfg);
+ioctl(fd, IOCTL_DMA_START_TRANSFER, WORD_BYTES);
 ```
 
+This streams the image width configuration from DDR memory to the accelerator.
+
 ---
 
-## 6. Send image
+### 6. Send Input Image (MM2S, Channel 0)
 
-The grayscale image is transferred through DMA Channel 0.
+The grayscale image is transferred through the first MM2S DMA channel.
 
-```text
-Channel 0 (MM2S)
+```c
+ioctl(fd, IOCTL_SELECT_CHANNEL, 0);
+ioctl(fd, IOCTL_DMA_WRITE_BUFFER, (unsigned char *)img);
+ioctl(fd, IOCTL_DMA_START_TRANSFER, in_pixels * WORD_BYTES);
 ```
 
----
-
-## 7. Wait for completion
-
-The software polls the DMA status registers until all channels become idle.
-
-DMA error conditions (slave errors, decode errors, DMA internal errors) are also checked.
+This streams the input image from DDR memory to the edge detection accelerator.
 
 ---
 
-## 8. Read processed image
+### 7. Wait for DMA Completion
 
-The processed pixels are copied back into userspace.
+The application waits until all DMA channels report the **Idle** state.
 
-The application prints the resulting edge-detected image.
+```c
+wait_done(fd, 0, "DMA0", 50000);
+wait_done(fd, 1, "DMA1", 50000);
+wait_done(fd, 2, "DMA2", 50000);
+```
+
+During polling, the application also checks for DMA error conditions such as:
+
+- DMA Internal Error
+- Slave Error
+- Decode Error
 
 ---
+
+### 8. Receive Processed Image (S2MM, Channel 2)
+
+After all DMA transfers complete, the processed image is copied back into userspace.
+
+```c
+ioctl(fd, IOCTL_SELECT_CHANNEL, 2);
+ioctl(fd, IOCTL_DMA_READ_BUFFER, (unsigned char *)out);
+```
+
+This stores the edge detection result from the accelerator into the userspace output buffer.
+
+---
+
+### 9. Display Output
+
+Finally, the application prints the processed image to the console.
+
+```c
+for (size_t i = 0; i < out_pixels; ++i) {
+    if (i % out_width == 0)
+        printf("\n");
+    printf("%02X ", out[i] & 0xFF);
+}
+```
 
 # Dataflow
 
