@@ -279,11 +279,11 @@ If no arguments are supplied, the application executes the Roberts operator usin
 # Example Execution
 
 ```text
-Input image (64x64)
+Input image (16x16)
 
 Accelerator configured:
 REG0 = 0x02000001
-REG1 = 3969
+REG1 = 196
 
 DMA transfers started.
 
@@ -291,7 +291,7 @@ DMA0 status = DONE
 DMA1 status = DONE
 DMA2 status = DONE
 
-Sobel output (3969 words)
+Sobel output (196 words)
 
 ...
 ```
