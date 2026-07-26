@@ -7,11 +7,6 @@
 #include <string.h>
 #include <errno.h>
 
-#include <sys/mman.h>
-
-#define ACCEL_BASE      0xA0010000UL
-#define ACCEL_MAP_SIZE  0x1000UL
-
 #define ACCEL_REG0  0x00
 #define ACCEL_REG1  0x04
 
@@ -23,6 +18,11 @@ typedef enum {
     KERNEL_SOBEL   = SOBEL_KERNEL_ID
 } kernel_t;
 
+struct axi_lite_reg_io {
+    uint32_t offset;
+    uint32_t value;
+};
+
 #define DMA_MAGIC 'D'
 #define IOCTL_SELECT_CHANNEL      _IOW(DMA_MAGIC, 0, int)
 #define IOCTL_DMA_WRITE_BUFFER    _IOW(DMA_MAGIC, 1, unsigned char *)
@@ -31,6 +31,9 @@ typedef enum {
 #define IOCTL_READ_STATUS_REGISTER _IOR(DMA_MAGIC, 4, unsigned int*)
 #define IOCTL_DMA_RESET           _IOW(DMA_MAGIC, 5, size_t)
 #define IOCTL_DMA_RESET_ALL       _IOW(DMA_MAGIC, 6, size_t)
+#define IOCTL_DMA_RESET_ALL       _IOW(DMA_MAGIC, 6, size_t)
+#define IOCTL_AXILITE_WRITE_REG   _IOW(DMA_MAGIC, 7, struct axi_lite_reg_io)
+#define IOCTL_AXILITE_READ_REG    _IOWR(DMA_MAGIC, 8, struct axi_lite_reg_io)
 
 #define DEVICE_FILE "/dev/uniss_dma"
 
@@ -43,49 +46,57 @@ typedef enum {
 #define DMA_SR_DEC_ERR      0x00000040U
 #define DMA_SR_ERR_IRQ      0x00004000U
 
-static int configure_accelerator(kernel_t kernel, unsigned int output_tokens)
+static int configure_accelerator(int fd,
+                                 kernel_t kernel,
+                                 unsigned int output_tokens)
 {
-    int memfd;
-    void *map;
-    volatile uint32_t *accel;
+    struct axi_lite_reg_io reg;
 
-    memfd = open("/dev/mem", O_RDWR | O_SYNC);
-    if (memfd < 0) {
-        perror("open /dev/mem");
+    /* REG1 = number of output pixels */
+    reg.offset = ACCEL_REG1;
+    reg.value  = output_tokens;
+
+    if (ioctl(fd, IOCTL_AXILITE_WRITE_REG, &reg) < 0) {
+        perror("IOCTL_AXILITE_WRITE_REG(REG1)");
         return -1;
     }
 
-    map = mmap(NULL, ACCEL_MAP_SIZE,
-               PROT_READ | PROT_WRITE, MAP_SHARED,
-               memfd, ACCEL_BASE);
+    /* REG0[2] = enable output counter */
+    reg.offset = ACCEL_REG0;
+    reg.value  = ((uint32_t)kernel << 24) | 0x4U;
 
-    if (map == MAP_FAILED) {
-        perror("mmap accelerator");
-        close(memfd);
+    if (ioctl(fd, IOCTL_AXILITE_WRITE_REG, &reg) < 0) {
+        perror("IOCTL_AXILITE_WRITE_REG(REG0)");
         return -1;
     }
 
-    accel = (volatile uint32_t *)map;
+    /* REG0[0] = start pulse */
+    reg.value = ((uint32_t)kernel << 24) | 0x1U;
 
-    /* REG1: nubmer output tokenها */
-    accel[ACCEL_REG1 / sizeof(uint32_t)] = output_tokens;
+    if (ioctl(fd, IOCTL_AXILITE_WRITE_REG, &reg) < 0) {
+        perror("IOCTL_AXILITE_WRITE_REG(REG0)");
+        return -1;
+    }
 
-    /* REG0[2]=1:  output counter */
-    accel[ACCEL_REG0 / sizeof(uint32_t)] =
-        ((uint32_t)kernel << 24) | 0x4U;
+    /* Optional: read registers back for debugging */
 
-    /* REG0[0]=1: start pulse */
-    accel[ACCEL_REG0 / sizeof(uint32_t)] =
-        ((uint32_t)kernel << 24) | 0x1U;
+    reg.offset = ACCEL_REG0;
+    if (ioctl(fd, IOCTL_AXILITE_READ_REG, &reg) < 0) {
+        perror("IOCTL_AXILITE_READ_REG(REG0)");
+        return -1;
+    }
+    uint32_t reg0 = reg.value;
 
-    __sync_synchronize();
+    reg.offset = ACCEL_REG1;
+    if (ioctl(fd, IOCTL_AXILITE_READ_REG, &reg) < 0) {
+        perror("IOCTL_AXILITE_READ_REG(REG1)");
+        return -1;
+    }
+    uint32_t reg1 = reg.value;
 
     printf("Accelerator configured: REG0=0x%08X, REG1=%u\n",
-           accel[ACCEL_REG0 / 4],
-           accel[ACCEL_REG1 / 4]);
+           reg0, reg1);
 
-    munmap(map, ACCEL_MAP_SIZE);
-    close(memfd);
     return 0;
 }
 
@@ -296,7 +307,7 @@ int main(int argc, char **argv)
         close(fd);
         return 1;
     }
-    if (configure_accelerator(kernel, out_pixels) < 0)
+    if (configure_accelerator(fd, kernel, out_pixels) < 0)
     goto fail;
 
     /* Channel 2: output */
