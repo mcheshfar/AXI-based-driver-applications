@@ -9,3 +9,4 @@ Vivado can usually open projects created with earlier versions. If version compa
 - `acc_ip` — Importable AES256 IP for Vivado
 - `src_hdl` — Verilog source files for the AES IP
 - `design_1.tcl` — Tcl script used to recreate the project
+- `guidelines for the MDC-based design.pdf` — The guidelines for the MDC-based design of the accelerators to have the complete implementation flow (from the specifications to the on-board execution)
