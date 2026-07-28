@@ -72,7 +72,7 @@ dfg.region @top inputs (%in_size:i6, %in_pel: i8) outputs(%out_pel: i8) {
     dfg.instantiate @delay inputs(%0#1) outputs(%out_pel) : (i8) -> i8
 }
 ```
-This structure enables a **modular and composable design** and can be **automatically translated into XDF networks and CAL actors** for deployment within the Orcc toolchain. The generated files include `top.xdf` and `top.xdfdiag` (stored in the `baseline/` directory and always named consistently), as well as `accumulator.cal` and `lshifter.cal` (stored in the `custom/` directory, named after the operators defined in the MLIR).
+This structure enables a **modular and composable design** and can be **automatically translated into XDF networks and CAL actors** for deployment within the Orcc toolchain. The generated files include `top.xdf` and `top.xdfdiag` (stored in the `baseline/` directory and always named consistently), as well as `line_buffer.cal` and `delay.cal` (stored in the `custom/` directory, named after the operators defined in the MLIR).
 
 In the Orcc environment, you can import:
 
