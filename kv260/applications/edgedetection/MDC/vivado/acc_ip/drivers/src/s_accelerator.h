@@ -1,7 +1,7 @@
 /*****************************************************************************
 *  Filename:          s_accelerator.h
 *  Description:       Stream Accelerator Driver Header
-*  Date:              2026/07/15 18:45:05 (by Multi-Dataflow Composer - Platform Composer)
+*  Date:              2026/08/03 12:14:40 (by Multi-Dataflow Composer - Platform Composer)
 *****************************************************************************/
 
 #ifndef S_ACCELERATOR_H

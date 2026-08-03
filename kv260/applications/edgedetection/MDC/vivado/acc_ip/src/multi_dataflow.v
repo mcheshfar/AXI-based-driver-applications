@@ -2,7 +2,7 @@
 //
 // Multi-Dataflow Composer tool - Platform Composer
 // Multi-Dataflow Network module 
-// Date: 2026/07/15 18:45:05
+// Date: 2026/08/03 12:14:40
 //
 // ----------------------------------------------------------------------------
 
@@ -38,7 +38,7 @@ module multi_dataflow (
 // internal signals
 // ----------------------------------------------------------------------------
 // Sboxes Config Wire(s)
-wire [13 : 0] sel;
+wire [5 : 0] sel;
 		
 
 
@@ -73,6 +73,45 @@ wire [13 : 0] roberts_x_0_out_pel_data;
 wire roberts_x_0_out_pel_wr;
 wire roberts_x_0_out_pel_full;
 	
+// actor abs_sum_0
+wire [13 : 0] fifo_big_abs_sum_0_in_gx_data;
+wire fifo_big_abs_sum_0_in_gx_wr;
+wire fifo_big_abs_sum_0_in_gx_full;
+wire [13 : 0] abs_sum_0_in_gx_data;
+wire abs_sum_0_in_gx_rd;
+wire abs_sum_0_in_gx_empty;
+wire [13 : 0] fifo_big_abs_sum_0_in_gy_data;
+wire fifo_big_abs_sum_0_in_gy_wr;
+wire fifo_big_abs_sum_0_in_gy_full;
+wire [13 : 0] abs_sum_0_in_gy_data;
+wire abs_sum_0_in_gy_rd;
+wire abs_sum_0_in_gy_empty;
+wire [13 : 0] abs_sum_0_out_g_data;
+wire abs_sum_0_out_g_wr;
+wire abs_sum_0_out_g_full;
+	
+// actor delay_0
+wire [7 : 0] fifo_big_delay_0_in_pel_data;
+wire fifo_big_delay_0_in_pel_wr;
+wire fifo_big_delay_0_in_pel_full;
+wire [7 : 0] delay_0_in_pel_data;
+wire delay_0_in_pel_rd;
+wire delay_0_in_pel_empty;
+wire [7 : 0] delay_0_out_pel_data;
+wire delay_0_out_pel_wr;
+wire delay_0_out_pel_full;
+	
+// actor delay_1
+wire [7 : 0] fifo_big_delay_1_in_pel_data;
+wire fifo_big_delay_1_in_pel_wr;
+wire fifo_big_delay_1_in_pel_full;
+wire [7 : 0] delay_1_in_pel_data;
+wire delay_1_in_pel_rd;
+wire delay_1_in_pel_empty;
+wire [7 : 0] delay_1_out_pel_data;
+wire delay_1_out_pel_wr;
+wire delay_1_out_pel_full;
+	
 // actor roberts_y_0
 wire [7 : 0] fifo_big_roberts_y_0_pel00_data;
 wire fifo_big_roberts_y_0_pel00_wr;
@@ -102,79 +141,6 @@ wire [13 : 0] roberts_y_0_out_pel_data;
 wire roberts_y_0_out_pel_wr;
 wire roberts_y_0_out_pel_full;
 	
-// actor delay_0
-wire [7 : 0] fifo_big_delay_0_in_pel_data;
-wire fifo_big_delay_0_in_pel_wr;
-wire fifo_big_delay_0_in_pel_full;
-wire [7 : 0] delay_0_in_pel_data;
-wire delay_0_in_pel_rd;
-wire delay_0_in_pel_empty;
-wire [7 : 0] delay_0_out_pel_data;
-wire delay_0_out_pel_wr;
-wire delay_0_out_pel_full;
-	
-// actor line_buffer_0
-wire [5 : 0] fifo_big_line_buffer_0_real_size_data;
-wire fifo_big_line_buffer_0_real_size_wr;
-wire fifo_big_line_buffer_0_real_size_full;
-wire [5 : 0] line_buffer_0_real_size_data;
-wire line_buffer_0_real_size_rd;
-wire line_buffer_0_real_size_empty;
-wire [5 : 0] fifo_big_line_buffer_0_ext_size_data;
-wire fifo_big_line_buffer_0_ext_size_wr;
-wire fifo_big_line_buffer_0_ext_size_full;
-wire [5 : 0] line_buffer_0_ext_size_data;
-wire line_buffer_0_ext_size_rd;
-wire line_buffer_0_ext_size_empty;
-wire [8 : 0] fifo_big_line_buffer_0_in_pel_data;
-wire fifo_big_line_buffer_0_in_pel_wr;
-wire fifo_big_line_buffer_0_in_pel_full;
-wire [8 : 0] line_buffer_0_in_pel_data;
-wire line_buffer_0_in_pel_rd;
-wire line_buffer_0_in_pel_empty;
-wire [7 : 0] line_buffer_0_out_pel_data;
-wire line_buffer_0_out_pel_wr;
-wire line_buffer_0_out_pel_full;
-	
-// actor delay_1
-wire [7 : 0] fifo_big_delay_1_in_pel_data;
-wire fifo_big_delay_1_in_pel_wr;
-wire fifo_big_delay_1_in_pel_full;
-wire [7 : 0] delay_1_in_pel_data;
-wire delay_1_in_pel_rd;
-wire delay_1_in_pel_empty;
-wire [7 : 0] delay_1_out_pel_data;
-wire delay_1_out_pel_wr;
-wire delay_1_out_pel_full;
-	
-// actor abs_sum_0
-wire [13 : 0] fifo_big_abs_sum_0_in_gx_data;
-wire fifo_big_abs_sum_0_in_gx_wr;
-wire fifo_big_abs_sum_0_in_gx_full;
-wire [13 : 0] abs_sum_0_in_gx_data;
-wire abs_sum_0_in_gx_rd;
-wire abs_sum_0_in_gx_empty;
-wire [13 : 0] fifo_big_abs_sum_0_in_gy_data;
-wire fifo_big_abs_sum_0_in_gy_wr;
-wire fifo_big_abs_sum_0_in_gy_full;
-wire [13 : 0] abs_sum_0_in_gy_data;
-wire abs_sum_0_in_gy_rd;
-wire abs_sum_0_in_gy_empty;
-wire [13 : 0] abs_sum_0_out_g_data;
-wire abs_sum_0_out_g_wr;
-wire abs_sum_0_out_g_full;
-	
-// actor thr_0
-wire [13 : 0] fifo_big_thr_0_in_g_data;
-wire fifo_big_thr_0_in_g_wr;
-wire fifo_big_thr_0_in_g_full;
-wire [13 : 0] thr_0_in_g_data;
-wire thr_0_in_g_rd;
-wire thr_0_in_g_empty;
-wire [7 : 0] thr_0_out_pel_data;
-wire thr_0_out_pel_wr;
-wire thr_0_out_pel_full;
-	
 // actor remove_2x2_0
 wire [5 : 0] fifo_big_remove_2x2_0_in_size_data;
 wire fifo_big_remove_2x2_0_in_size_wr;
@@ -191,6 +157,97 @@ wire remove_2x2_0_in_pel_empty;
 wire [7 : 0] remove_2x2_0_out_pel_data;
 wire remove_2x2_0_out_pel_wr;
 wire remove_2x2_0_out_pel_full;
+	
+// actor line_buffer_0
+wire [5 : 0] fifo_big_line_buffer_0_real_size_data;
+wire fifo_big_line_buffer_0_real_size_wr;
+wire fifo_big_line_buffer_0_real_size_full;
+wire [5 : 0] line_buffer_0_real_size_data;
+wire line_buffer_0_real_size_rd;
+wire line_buffer_0_real_size_empty;
+wire [5 : 0] fifo_big_line_buffer_0_ext_size_data;
+wire fifo_big_line_buffer_0_ext_size_wr;
+wire fifo_big_line_buffer_0_ext_size_full;
+wire [5 : 0] line_buffer_0_ext_size_data;
+wire line_buffer_0_ext_size_rd;
+wire line_buffer_0_ext_size_empty;
+wire [7 : 0] fifo_big_line_buffer_0_in_pel_data;
+wire fifo_big_line_buffer_0_in_pel_wr;
+wire fifo_big_line_buffer_0_in_pel_full;
+wire [7 : 0] line_buffer_0_in_pel_data;
+wire line_buffer_0_in_pel_rd;
+wire line_buffer_0_in_pel_empty;
+wire [7 : 0] line_buffer_0_out_pel_data;
+wire line_buffer_0_out_pel_wr;
+wire line_buffer_0_out_pel_full;
+	
+// actor thr_0
+wire [13 : 0] fifo_big_thr_0_in_g_data;
+wire fifo_big_thr_0_in_g_wr;
+wire fifo_big_thr_0_in_g_full;
+wire [13 : 0] thr_0_in_g_data;
+wire thr_0_in_g_rd;
+wire thr_0_in_g_empty;
+wire [7 : 0] thr_0_out_pel_data;
+wire thr_0_out_pel_wr;
+wire thr_0_out_pel_full;
+	
+// actor line_buffer_1
+wire [5 : 0] fifo_big_line_buffer_1_real_size_data;
+wire fifo_big_line_buffer_1_real_size_wr;
+wire fifo_big_line_buffer_1_real_size_full;
+wire [5 : 0] line_buffer_1_real_size_data;
+wire line_buffer_1_real_size_rd;
+wire line_buffer_1_real_size_empty;
+wire [5 : 0] fifo_big_line_buffer_1_ext_size_data;
+wire fifo_big_line_buffer_1_ext_size_wr;
+wire fifo_big_line_buffer_1_ext_size_full;
+wire [5 : 0] line_buffer_1_ext_size_data;
+wire line_buffer_1_ext_size_rd;
+wire line_buffer_1_ext_size_empty;
+wire [7 : 0] fifo_big_line_buffer_1_in_pel_data;
+wire fifo_big_line_buffer_1_in_pel_wr;
+wire fifo_big_line_buffer_1_in_pel_full;
+wire [7 : 0] line_buffer_1_in_pel_data;
+wire line_buffer_1_in_pel_rd;
+wire line_buffer_1_in_pel_empty;
+wire [7 : 0] line_buffer_1_out_pel_data;
+wire line_buffer_1_out_pel_wr;
+wire line_buffer_1_out_pel_full;
+	
+// actor line_buffer_2
+wire [5 : 0] fifo_big_line_buffer_2_real_size_data;
+wire fifo_big_line_buffer_2_real_size_wr;
+wire fifo_big_line_buffer_2_real_size_full;
+wire [5 : 0] line_buffer_2_real_size_data;
+wire line_buffer_2_real_size_rd;
+wire line_buffer_2_real_size_empty;
+wire [5 : 0] fifo_big_line_buffer_2_ext_size_data;
+wire fifo_big_line_buffer_2_ext_size_wr;
+wire fifo_big_line_buffer_2_ext_size_full;
+wire [5 : 0] line_buffer_2_ext_size_data;
+wire line_buffer_2_ext_size_rd;
+wire line_buffer_2_ext_size_empty;
+wire [7 : 0] fifo_big_line_buffer_2_in_pel_data;
+wire fifo_big_line_buffer_2_in_pel_wr;
+wire fifo_big_line_buffer_2_in_pel_full;
+wire [7 : 0] line_buffer_2_in_pel_data;
+wire line_buffer_2_in_pel_rd;
+wire line_buffer_2_in_pel_empty;
+wire [7 : 0] line_buffer_2_out_pel_data;
+wire line_buffer_2_out_pel_wr;
+wire line_buffer_2_out_pel_full;
+	
+// actor delay_2
+wire [7 : 0] fifo_big_delay_2_in_pel_data;
+wire fifo_big_delay_2_in_pel_wr;
+wire fifo_big_delay_2_in_pel_full;
+wire [7 : 0] delay_2_in_pel_data;
+wire delay_2_in_pel_rd;
+wire delay_2_in_pel_empty;
+wire [7 : 0] delay_2_out_pel_data;
+wire delay_2_out_pel_wr;
+wire delay_2_out_pel_full;
 	
 // actor sobel_x_0
 wire [7 : 0] fifo_big_sobel_x_0_pel00_data;
@@ -250,6 +307,17 @@ wire sobel_x_0_pel22_empty;
 wire [13 : 0] sobel_x_0_out_pel_data;
 wire sobel_x_0_out_pel_wr;
 wire sobel_x_0_out_pel_full;
+	
+// actor delay_3
+wire [7 : 0] fifo_big_delay_3_in_pel_data;
+wire fifo_big_delay_3_in_pel_wr;
+wire fifo_big_delay_3_in_pel_full;
+wire [7 : 0] delay_3_in_pel_data;
+wire delay_3_in_pel_rd;
+wire delay_3_in_pel_empty;
+wire [7 : 0] delay_3_out_pel_data;
+wire delay_3_out_pel_wr;
+wire delay_3_out_pel_full;
 	
 // actor sobel_y_0
 wire [7 : 0] fifo_big_sobel_y_0_pel00_data;
@@ -327,51 +395,6 @@ wire [7 : 0] remove_3x3_0_out_pel_data;
 wire remove_3x3_0_out_pel_wr;
 wire remove_3x3_0_out_pel_full;
 	
-// actor line_buffer_1
-wire [5 : 0] fifo_big_line_buffer_1_real_size_data;
-wire fifo_big_line_buffer_1_real_size_wr;
-wire fifo_big_line_buffer_1_real_size_full;
-wire [5 : 0] line_buffer_1_real_size_data;
-wire line_buffer_1_real_size_rd;
-wire line_buffer_1_real_size_empty;
-wire [5 : 0] fifo_big_line_buffer_1_ext_size_data;
-wire fifo_big_line_buffer_1_ext_size_wr;
-wire fifo_big_line_buffer_1_ext_size_full;
-wire [5 : 0] line_buffer_1_ext_size_data;
-wire line_buffer_1_ext_size_rd;
-wire line_buffer_1_ext_size_empty;
-wire [8 : 0] fifo_big_line_buffer_1_in_pel_data;
-wire fifo_big_line_buffer_1_in_pel_wr;
-wire fifo_big_line_buffer_1_in_pel_full;
-wire [8 : 0] line_buffer_1_in_pel_data;
-wire line_buffer_1_in_pel_rd;
-wire line_buffer_1_in_pel_empty;
-wire [7 : 0] line_buffer_1_out_pel_data;
-wire line_buffer_1_out_pel_wr;
-wire line_buffer_1_out_pel_full;
-	
-// actor delay_2
-wire [7 : 0] fifo_big_delay_2_in_pel_data;
-wire fifo_big_delay_2_in_pel_wr;
-wire fifo_big_delay_2_in_pel_full;
-wire [7 : 0] delay_2_in_pel_data;
-wire delay_2_in_pel_rd;
-wire delay_2_in_pel_empty;
-wire [7 : 0] delay_2_out_pel_data;
-wire delay_2_out_pel_wr;
-wire delay_2_out_pel_full;
-	
-// actor delay_3
-wire [7 : 0] fifo_big_delay_3_in_pel_data;
-wire fifo_big_delay_3_in_pel_wr;
-wire fifo_big_delay_3_in_pel_full;
-wire [7 : 0] delay_3_in_pel_data;
-wire delay_3_in_pel_rd;
-wire delay_3_in_pel_empty;
-wire [7 : 0] delay_3_out_pel_data;
-wire delay_3_out_pel_wr;
-wire delay_3_out_pel_full;
-	
 // actor delay_4
 wire [7 : 0] fifo_big_delay_4_in_pel_data;
 wire fifo_big_delay_4_in_pel_wr;
@@ -394,16 +417,38 @@ wire [7 : 0] delay_5_out_pel_data;
 wire delay_5_out_pel_wr;
 wire delay_5_out_pel_full;
 	
+// actor delay_6
+wire [7 : 0] fifo_big_delay_6_in_pel_data;
+wire fifo_big_delay_6_in_pel_wr;
+wire fifo_big_delay_6_in_pel_full;
+wire [7 : 0] delay_6_in_pel_data;
+wire delay_6_in_pel_rd;
+wire delay_6_in_pel_empty;
+wire [7 : 0] delay_6_out_pel_data;
+wire delay_6_out_pel_wr;
+wire delay_6_out_pel_full;
+	
+// actor delay_7
+wire [7 : 0] fifo_big_delay_7_in_pel_data;
+wire fifo_big_delay_7_in_pel_wr;
+wire fifo_big_delay_7_in_pel_full;
+wire [7 : 0] delay_7_in_pel_data;
+wire delay_7_in_pel_rd;
+wire delay_7_in_pel_empty;
+wire [7 : 0] delay_7_out_pel_data;
+wire delay_7_out_pel_wr;
+wire delay_7_out_pel_full;
+	
 // actor sbox_0
-wire [7 : 0] sbox_0_in1_data;
+wire [13 : 0] sbox_0_in1_data;
 wire sbox_0_in1_wr;
 wire sbox_0_in1_full;
-wire [7 : 0] sbox_0_out1_data;
+wire [13 : 0] sbox_0_in2_data;
+wire sbox_0_in2_wr;
+wire sbox_0_in2_full;
+wire [13 : 0] sbox_0_out1_data;
 wire sbox_0_out1_wr;
 wire sbox_0_out1_full;
-wire [7 : 0] sbox_0_out2_data;
-wire sbox_0_out2_wr;
-wire sbox_0_out2_full;
 	
 // actor sbox_1
 wire [7 : 0] sbox_1_in1_data;
@@ -420,133 +465,45 @@ wire sbox_1_out2_full;
 wire [7 : 0] sbox_2_in1_data;
 wire sbox_2_in1_wr;
 wire sbox_2_in1_full;
+wire [7 : 0] sbox_2_in2_data;
+wire sbox_2_in2_wr;
+wire sbox_2_in2_full;
 wire [7 : 0] sbox_2_out1_data;
 wire sbox_2_out1_wr;
 wire sbox_2_out1_full;
-wire [7 : 0] sbox_2_out2_data;
-wire sbox_2_out2_wr;
-wire sbox_2_out2_full;
 	
 // actor sbox_3
-wire [7 : 0] sbox_3_in1_data;
+wire [5 : 0] sbox_3_in1_data;
 wire sbox_3_in1_wr;
 wire sbox_3_in1_full;
-wire [7 : 0] sbox_3_out1_data;
+wire [5 : 0] sbox_3_out1_data;
 wire sbox_3_out1_wr;
 wire sbox_3_out1_full;
-wire [7 : 0] sbox_3_out2_data;
+wire [5 : 0] sbox_3_out2_data;
 wire sbox_3_out2_wr;
 wire sbox_3_out2_full;
 	
 // actor sbox_4
-wire [7 : 0] sbox_4_in1_data;
+wire [13 : 0] sbox_4_in1_data;
 wire sbox_4_in1_wr;
 wire sbox_4_in1_full;
-wire [7 : 0] sbox_4_in2_data;
+wire [13 : 0] sbox_4_in2_data;
 wire sbox_4_in2_wr;
 wire sbox_4_in2_full;
-wire [7 : 0] sbox_4_out1_data;
+wire [13 : 0] sbox_4_out1_data;
 wire sbox_4_out1_wr;
 wire sbox_4_out1_full;
 	
 // actor sbox_5
-wire [5 : 0] sbox_5_in1_data;
+wire [7 : 0] sbox_5_in1_data;
 wire sbox_5_in1_wr;
 wire sbox_5_in1_full;
-wire [5 : 0] sbox_5_out1_data;
+wire [7 : 0] sbox_5_out1_data;
 wire sbox_5_out1_wr;
 wire sbox_5_out1_full;
-wire [5 : 0] sbox_5_out2_data;
+wire [7 : 0] sbox_5_out2_data;
 wire sbox_5_out2_wr;
 wire sbox_5_out2_full;
-	
-// actor sbox_6
-wire [5 : 0] sbox_6_in1_data;
-wire sbox_6_in1_wr;
-wire sbox_6_in1_full;
-wire [5 : 0] sbox_6_in2_data;
-wire sbox_6_in2_wr;
-wire sbox_6_in2_full;
-wire [5 : 0] sbox_6_out1_data;
-wire sbox_6_out1_wr;
-wire sbox_6_out1_full;
-	
-// actor sbox_7
-wire [5 : 0] sbox_7_in1_data;
-wire sbox_7_in1_wr;
-wire sbox_7_in1_full;
-wire [5 : 0] sbox_7_in2_data;
-wire sbox_7_in2_wr;
-wire sbox_7_in2_full;
-wire [5 : 0] sbox_7_out1_data;
-wire sbox_7_out1_wr;
-wire sbox_7_out1_full;
-	
-// actor sbox_8
-wire [7 : 0] sbox_8_in1_data;
-wire sbox_8_in1_wr;
-wire sbox_8_in1_full;
-wire [7 : 0] sbox_8_in2_data;
-wire sbox_8_in2_wr;
-wire sbox_8_in2_full;
-wire [8 : 0] sbox_8_out1_data;
-wire sbox_8_out1_wr;
-wire sbox_8_out1_full;
-	
-// actor sbox_9
-wire [7 : 0] sbox_9_in1_data;
-wire sbox_9_in1_wr;
-wire sbox_9_in1_full;
-wire [7 : 0] sbox_9_out1_data;
-wire sbox_9_out1_wr;
-wire sbox_9_out1_full;
-wire [7 : 0] sbox_9_out2_data;
-wire sbox_9_out2_wr;
-wire sbox_9_out2_full;
-	
-// actor sbox_10
-wire [13 : 0] sbox_10_in1_data;
-wire sbox_10_in1_wr;
-wire sbox_10_in1_full;
-wire [13 : 0] sbox_10_in2_data;
-wire sbox_10_in2_wr;
-wire sbox_10_in2_full;
-wire [13 : 0] sbox_10_out1_data;
-wire sbox_10_out1_wr;
-wire sbox_10_out1_full;
-	
-// actor sbox_11
-wire [13 : 0] sbox_11_in1_data;
-wire sbox_11_in1_wr;
-wire sbox_11_in1_full;
-wire [13 : 0] sbox_11_in2_data;
-wire sbox_11_in2_wr;
-wire sbox_11_in2_full;
-wire [13 : 0] sbox_11_out1_data;
-wire sbox_11_out1_wr;
-wire sbox_11_out1_full;
-	
-// actor sbox_12
-wire [7 : 0] sbox_12_in1_data;
-wire sbox_12_in1_wr;
-wire sbox_12_in1_full;
-wire [7 : 0] sbox_12_in2_data;
-wire sbox_12_in2_wr;
-wire sbox_12_in2_full;
-wire [7 : 0] sbox_12_out1_data;
-wire sbox_12_out1_wr;
-wire sbox_12_out1_full;
-	
-// actor sbox_13
-wire [7 : 0] sbox_13_in1_data;
-wire sbox_13_in1_wr;
-wire sbox_13_in1_full;
-wire [7 : 0] sbox_13_in2_data;
-wire sbox_13_in2_wr;
-wire sbox_13_in2_full;
-wire [7 : 0] sbox_13_out1_data;
-wire sbox_13_out1_wr;
-wire sbox_13_out1_full;
 // ----------------------------------------------------------------------------
 
 // body
@@ -655,6 +612,139 @@ roberts_x actor_roberts_x_0 (
 
 
 
+// fifo_big_abs_sum_0_in_gx
+fifo_big #(
+	.depth(64),
+	.size(14)
+) fifo_big_abs_sum_0_in_gx(
+	.datain(fifo_big_abs_sum_0_in_gx_data),
+	.dataout(abs_sum_0_in_gx_data),
+	.enr(abs_sum_0_in_gx_rd),
+	.enw(fifo_big_abs_sum_0_in_gx_wr),
+	.empty(abs_sum_0_in_gx_empty),
+	.full(fifo_big_abs_sum_0_in_gx_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+// fifo_big_abs_sum_0_in_gy
+fifo_big #(
+	.depth(64),
+	.size(14)
+) fifo_big_abs_sum_0_in_gy(
+	.datain(fifo_big_abs_sum_0_in_gy_data),
+	.dataout(abs_sum_0_in_gy_data),
+	.enr(abs_sum_0_in_gy_rd),
+	.enw(fifo_big_abs_sum_0_in_gy_wr),
+	.empty(abs_sum_0_in_gy_empty),
+	.full(fifo_big_abs_sum_0_in_gy_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor abs_sum_0
+abs_sum actor_abs_sum_0 (
+	// Input Signal(s)
+	.in_gx(abs_sum_0_in_gx_data),
+	.in_gx_rd(abs_sum_0_in_gx_rd),
+	.in_gx_empty(abs_sum_0_in_gx_empty),
+	.in_gy(abs_sum_0_in_gy_data),
+	.in_gy_rd(abs_sum_0_in_gy_rd),
+	.in_gy_empty(abs_sum_0_in_gy_empty)
+	,
+	
+	// Output Signal(s)
+	.out_g(abs_sum_0_out_g_data),
+	.out_g_wr(abs_sum_0_out_g_wr),
+	.out_g_full(abs_sum_0_out_g_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_delay_0_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_delay_0_in_pel(
+	.datain(fifo_big_delay_0_in_pel_data),
+	.dataout(delay_0_in_pel_data),
+	.enr(delay_0_in_pel_rd),
+	.enw(fifo_big_delay_0_in_pel_wr),
+	.empty(delay_0_in_pel_empty),
+	.full(fifo_big_delay_0_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor delay_0
+delay actor_delay_0 (
+	// Input Signal(s)
+	.in_pel(delay_0_in_pel_data),
+	.in_pel_rd(delay_0_in_pel_rd),
+	.in_pel_empty(delay_0_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(delay_0_out_pel_data),
+	.out_pel_wr(delay_0_out_pel_wr),
+	.out_pel_full(delay_0_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_delay_1_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_delay_1_in_pel(
+	.datain(fifo_big_delay_1_in_pel_data),
+	.dataout(delay_1_in_pel_data),
+	.enr(delay_1_in_pel_rd),
+	.enw(fifo_big_delay_1_in_pel_wr),
+	.empty(delay_1_in_pel_empty),
+	.full(fifo_big_delay_1_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor delay_1
+delay actor_delay_1 (
+	// Input Signal(s)
+	.in_pel(delay_1_in_pel_data),
+	.in_pel_rd(delay_1_in_pel_rd),
+	.in_pel_empty(delay_1_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(delay_1_out_pel_data),
+	.out_pel_wr(delay_1_out_pel_wr),
+	.out_pel_full(delay_1_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
 // fifo_big_roberts_y_0_pel00
 fifo_big #(
 	.depth(64),
@@ -750,253 +840,6 @@ roberts_y actor_roberts_y_0 (
 
 
 
-// fifo_big_delay_0_in_pel
-fifo_big #(
-	.depth(64),
-	.size(8)
-) fifo_big_delay_0_in_pel(
-	.datain(fifo_big_delay_0_in_pel_data),
-	.dataout(delay_0_in_pel_data),
-	.enr(delay_0_in_pel_rd),
-	.enw(fifo_big_delay_0_in_pel_wr),
-	.empty(delay_0_in_pel_empty),
-	.full(fifo_big_delay_0_in_pel_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-
-// actor delay_0
-delay actor_delay_0 (
-	// Input Signal(s)
-	.in_pel(delay_0_in_pel_data),
-	.in_pel_rd(delay_0_in_pel_rd),
-	.in_pel_empty(delay_0_in_pel_empty)
-	,
-	
-	// Output Signal(s)
-	.out_pel(delay_0_out_pel_data),
-	.out_pel_wr(delay_0_out_pel_wr),
-	.out_pel_full(delay_0_out_pel_full)
-		,
-	
-	// System Signal(s)
-	.clock(clock),
-	.reset(reset)
-);
-
-
-
-// fifo_big_line_buffer_0_real_size
-fifo_big #(
-	.depth(64),
-	.size(6)
-) fifo_big_line_buffer_0_real_size(
-	.datain(fifo_big_line_buffer_0_real_size_data),
-	.dataout(line_buffer_0_real_size_data),
-	.enr(line_buffer_0_real_size_rd),
-	.enw(fifo_big_line_buffer_0_real_size_wr),
-	.empty(line_buffer_0_real_size_empty),
-	.full(fifo_big_line_buffer_0_real_size_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-// fifo_big_line_buffer_0_ext_size
-fifo_big #(
-	.depth(64),
-	.size(6)
-) fifo_big_line_buffer_0_ext_size(
-	.datain(fifo_big_line_buffer_0_ext_size_data),
-	.dataout(line_buffer_0_ext_size_data),
-	.enr(line_buffer_0_ext_size_rd),
-	.enw(fifo_big_line_buffer_0_ext_size_wr),
-	.empty(line_buffer_0_ext_size_empty),
-	.full(fifo_big_line_buffer_0_ext_size_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-// fifo_big_line_buffer_0_in_pel
-fifo_big #(
-	.depth(64),
-	.size(9)
-) fifo_big_line_buffer_0_in_pel(
-	.datain(fifo_big_line_buffer_0_in_pel_data),
-	.dataout(line_buffer_0_in_pel_data),
-	.enr(line_buffer_0_in_pel_rd),
-	.enw(fifo_big_line_buffer_0_in_pel_wr),
-	.empty(line_buffer_0_in_pel_empty),
-	.full(fifo_big_line_buffer_0_in_pel_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-
-// actor line_buffer_0
-line_buffer actor_line_buffer_0 (
-	// Input Signal(s)
-	.real_size(line_buffer_0_real_size_data),
-	.real_size_rd(line_buffer_0_real_size_rd),
-	.real_size_empty(line_buffer_0_real_size_empty),
-	.ext_size(line_buffer_0_ext_size_data),
-	.ext_size_rd(line_buffer_0_ext_size_rd),
-	.ext_size_empty(line_buffer_0_ext_size_empty),
-	.in_pel(line_buffer_0_in_pel_data),
-	.in_pel_rd(line_buffer_0_in_pel_rd),
-	.in_pel_empty(line_buffer_0_in_pel_empty)
-	,
-	
-	// Output Signal(s)
-	.out_pel(line_buffer_0_out_pel_data),
-	.out_pel_wr(line_buffer_0_out_pel_wr),
-	.out_pel_full(line_buffer_0_out_pel_full)
-		,
-	
-	// System Signal(s)
-	.clock(clock),
-	.reset(reset)
-);
-
-
-
-// fifo_big_delay_1_in_pel
-fifo_big #(
-	.depth(64),
-	.size(8)
-) fifo_big_delay_1_in_pel(
-	.datain(fifo_big_delay_1_in_pel_data),
-	.dataout(delay_1_in_pel_data),
-	.enr(delay_1_in_pel_rd),
-	.enw(fifo_big_delay_1_in_pel_wr),
-	.empty(delay_1_in_pel_empty),
-	.full(fifo_big_delay_1_in_pel_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-
-// actor delay_1
-delay actor_delay_1 (
-	// Input Signal(s)
-	.in_pel(delay_1_in_pel_data),
-	.in_pel_rd(delay_1_in_pel_rd),
-	.in_pel_empty(delay_1_in_pel_empty)
-	,
-	
-	// Output Signal(s)
-	.out_pel(delay_1_out_pel_data),
-	.out_pel_wr(delay_1_out_pel_wr),
-	.out_pel_full(delay_1_out_pel_full)
-		,
-	
-	// System Signal(s)
-	.clock(clock),
-	.reset(reset)
-);
-
-
-
-// fifo_big_abs_sum_0_in_gx
-fifo_big #(
-	.depth(64),
-	.size(14)
-) fifo_big_abs_sum_0_in_gx(
-	.datain(fifo_big_abs_sum_0_in_gx_data),
-	.dataout(abs_sum_0_in_gx_data),
-	.enr(abs_sum_0_in_gx_rd),
-	.enw(fifo_big_abs_sum_0_in_gx_wr),
-	.empty(abs_sum_0_in_gx_empty),
-	.full(fifo_big_abs_sum_0_in_gx_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-// fifo_big_abs_sum_0_in_gy
-fifo_big #(
-	.depth(64),
-	.size(14)
-) fifo_big_abs_sum_0_in_gy(
-	.datain(fifo_big_abs_sum_0_in_gy_data),
-	.dataout(abs_sum_0_in_gy_data),
-	.enr(abs_sum_0_in_gy_rd),
-	.enw(fifo_big_abs_sum_0_in_gy_wr),
-	.empty(abs_sum_0_in_gy_empty),
-	.full(fifo_big_abs_sum_0_in_gy_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-
-// actor abs_sum_0
-abs_sum actor_abs_sum_0 (
-	// Input Signal(s)
-	.in_gx(abs_sum_0_in_gx_data),
-	.in_gx_rd(abs_sum_0_in_gx_rd),
-	.in_gx_empty(abs_sum_0_in_gx_empty),
-	.in_gy(abs_sum_0_in_gy_data),
-	.in_gy_rd(abs_sum_0_in_gy_rd),
-	.in_gy_empty(abs_sum_0_in_gy_empty)
-	,
-	
-	// Output Signal(s)
-	.out_g(abs_sum_0_out_g_data),
-	.out_g_wr(abs_sum_0_out_g_wr),
-	.out_g_full(abs_sum_0_out_g_full)
-		,
-	
-	// System Signal(s)
-	.clock(clock),
-	.reset(reset)
-);
-
-
-
-// fifo_big_thr_0_in_g
-fifo_big #(
-	.depth(64),
-	.size(14)
-) fifo_big_thr_0_in_g(
-	.datain(fifo_big_thr_0_in_g_data),
-	.dataout(thr_0_in_g_data),
-	.enr(thr_0_in_g_rd),
-	.enw(fifo_big_thr_0_in_g_wr),
-	.empty(thr_0_in_g_empty),
-	.full(fifo_big_thr_0_in_g_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-
-// actor thr_0
-thr actor_thr_0 (
-	// Input Signal(s)
-	.in_g(thr_0_in_g_data),
-	.in_g_rd(thr_0_in_g_rd),
-	.in_g_empty(thr_0_in_g_empty)
-	,
-	
-	// Output Signal(s)
-	.out_pel(thr_0_out_pel_data),
-	.out_pel_wr(thr_0_out_pel_wr),
-	.out_pel_full(thr_0_out_pel_full)
-		,
-	
-	// System Signal(s)
-	.clock(clock),
-	.reset(reset)
-);
-
-
-
 // fifo_big_remove_2x2_0_in_size
 fifo_big #(
 	.depth(64),
@@ -1045,6 +888,310 @@ remove_2x2 actor_remove_2x2_0 (
 	.out_pel(remove_2x2_0_out_pel_data),
 	.out_pel_wr(remove_2x2_0_out_pel_wr),
 	.out_pel_full(remove_2x2_0_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_line_buffer_0_real_size
+fifo_big #(
+	.depth(64),
+	.size(6)
+) fifo_big_line_buffer_0_real_size(
+	.datain(fifo_big_line_buffer_0_real_size_data),
+	.dataout(line_buffer_0_real_size_data),
+	.enr(line_buffer_0_real_size_rd),
+	.enw(fifo_big_line_buffer_0_real_size_wr),
+	.empty(line_buffer_0_real_size_empty),
+	.full(fifo_big_line_buffer_0_real_size_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+// fifo_big_line_buffer_0_ext_size
+fifo_big #(
+	.depth(64),
+	.size(6)
+) fifo_big_line_buffer_0_ext_size(
+	.datain(fifo_big_line_buffer_0_ext_size_data),
+	.dataout(line_buffer_0_ext_size_data),
+	.enr(line_buffer_0_ext_size_rd),
+	.enw(fifo_big_line_buffer_0_ext_size_wr),
+	.empty(line_buffer_0_ext_size_empty),
+	.full(fifo_big_line_buffer_0_ext_size_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+// fifo_big_line_buffer_0_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_line_buffer_0_in_pel(
+	.datain(fifo_big_line_buffer_0_in_pel_data),
+	.dataout(line_buffer_0_in_pel_data),
+	.enr(line_buffer_0_in_pel_rd),
+	.enw(fifo_big_line_buffer_0_in_pel_wr),
+	.empty(line_buffer_0_in_pel_empty),
+	.full(fifo_big_line_buffer_0_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor line_buffer_0
+line_buffer actor_line_buffer_0 (
+	// Input Signal(s)
+	.real_size(line_buffer_0_real_size_data),
+	.real_size_rd(line_buffer_0_real_size_rd),
+	.real_size_empty(line_buffer_0_real_size_empty),
+	.ext_size(line_buffer_0_ext_size_data),
+	.ext_size_rd(line_buffer_0_ext_size_rd),
+	.ext_size_empty(line_buffer_0_ext_size_empty),
+	.in_pel(line_buffer_0_in_pel_data),
+	.in_pel_rd(line_buffer_0_in_pel_rd),
+	.in_pel_empty(line_buffer_0_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(line_buffer_0_out_pel_data),
+	.out_pel_wr(line_buffer_0_out_pel_wr),
+	.out_pel_full(line_buffer_0_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_thr_0_in_g
+fifo_big #(
+	.depth(64),
+	.size(14)
+) fifo_big_thr_0_in_g(
+	.datain(fifo_big_thr_0_in_g_data),
+	.dataout(thr_0_in_g_data),
+	.enr(thr_0_in_g_rd),
+	.enw(fifo_big_thr_0_in_g_wr),
+	.empty(thr_0_in_g_empty),
+	.full(fifo_big_thr_0_in_g_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor thr_0
+thr actor_thr_0 (
+	// Input Signal(s)
+	.in_g(thr_0_in_g_data),
+	.in_g_rd(thr_0_in_g_rd),
+	.in_g_empty(thr_0_in_g_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(thr_0_out_pel_data),
+	.out_pel_wr(thr_0_out_pel_wr),
+	.out_pel_full(thr_0_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_line_buffer_1_real_size
+fifo_big #(
+	.depth(64),
+	.size(6)
+) fifo_big_line_buffer_1_real_size(
+	.datain(fifo_big_line_buffer_1_real_size_data),
+	.dataout(line_buffer_1_real_size_data),
+	.enr(line_buffer_1_real_size_rd),
+	.enw(fifo_big_line_buffer_1_real_size_wr),
+	.empty(line_buffer_1_real_size_empty),
+	.full(fifo_big_line_buffer_1_real_size_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+// fifo_big_line_buffer_1_ext_size
+fifo_big #(
+	.depth(64),
+	.size(6)
+) fifo_big_line_buffer_1_ext_size(
+	.datain(fifo_big_line_buffer_1_ext_size_data),
+	.dataout(line_buffer_1_ext_size_data),
+	.enr(line_buffer_1_ext_size_rd),
+	.enw(fifo_big_line_buffer_1_ext_size_wr),
+	.empty(line_buffer_1_ext_size_empty),
+	.full(fifo_big_line_buffer_1_ext_size_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+// fifo_big_line_buffer_1_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_line_buffer_1_in_pel(
+	.datain(fifo_big_line_buffer_1_in_pel_data),
+	.dataout(line_buffer_1_in_pel_data),
+	.enr(line_buffer_1_in_pel_rd),
+	.enw(fifo_big_line_buffer_1_in_pel_wr),
+	.empty(line_buffer_1_in_pel_empty),
+	.full(fifo_big_line_buffer_1_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor line_buffer_1
+line_buffer actor_line_buffer_1 (
+	// Input Signal(s)
+	.real_size(line_buffer_1_real_size_data),
+	.real_size_rd(line_buffer_1_real_size_rd),
+	.real_size_empty(line_buffer_1_real_size_empty),
+	.ext_size(line_buffer_1_ext_size_data),
+	.ext_size_rd(line_buffer_1_ext_size_rd),
+	.ext_size_empty(line_buffer_1_ext_size_empty),
+	.in_pel(line_buffer_1_in_pel_data),
+	.in_pel_rd(line_buffer_1_in_pel_rd),
+	.in_pel_empty(line_buffer_1_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(line_buffer_1_out_pel_data),
+	.out_pel_wr(line_buffer_1_out_pel_wr),
+	.out_pel_full(line_buffer_1_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_line_buffer_2_real_size
+fifo_big #(
+	.depth(64),
+	.size(6)
+) fifo_big_line_buffer_2_real_size(
+	.datain(fifo_big_line_buffer_2_real_size_data),
+	.dataout(line_buffer_2_real_size_data),
+	.enr(line_buffer_2_real_size_rd),
+	.enw(fifo_big_line_buffer_2_real_size_wr),
+	.empty(line_buffer_2_real_size_empty),
+	.full(fifo_big_line_buffer_2_real_size_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+// fifo_big_line_buffer_2_ext_size
+fifo_big #(
+	.depth(64),
+	.size(6)
+) fifo_big_line_buffer_2_ext_size(
+	.datain(fifo_big_line_buffer_2_ext_size_data),
+	.dataout(line_buffer_2_ext_size_data),
+	.enr(line_buffer_2_ext_size_rd),
+	.enw(fifo_big_line_buffer_2_ext_size_wr),
+	.empty(line_buffer_2_ext_size_empty),
+	.full(fifo_big_line_buffer_2_ext_size_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+// fifo_big_line_buffer_2_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_line_buffer_2_in_pel(
+	.datain(fifo_big_line_buffer_2_in_pel_data),
+	.dataout(line_buffer_2_in_pel_data),
+	.enr(line_buffer_2_in_pel_rd),
+	.enw(fifo_big_line_buffer_2_in_pel_wr),
+	.empty(line_buffer_2_in_pel_empty),
+	.full(fifo_big_line_buffer_2_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor line_buffer_2
+line_buffer actor_line_buffer_2 (
+	// Input Signal(s)
+	.real_size(line_buffer_2_real_size_data),
+	.real_size_rd(line_buffer_2_real_size_rd),
+	.real_size_empty(line_buffer_2_real_size_empty),
+	.ext_size(line_buffer_2_ext_size_data),
+	.ext_size_rd(line_buffer_2_ext_size_rd),
+	.ext_size_empty(line_buffer_2_ext_size_empty),
+	.in_pel(line_buffer_2_in_pel_data),
+	.in_pel_rd(line_buffer_2_in_pel_rd),
+	.in_pel_empty(line_buffer_2_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(line_buffer_2_out_pel_data),
+	.out_pel_wr(line_buffer_2_out_pel_wr),
+	.out_pel_full(line_buffer_2_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_delay_2_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_delay_2_in_pel(
+	.datain(fifo_big_delay_2_in_pel_data),
+	.dataout(delay_2_in_pel_data),
+	.enr(delay_2_in_pel_rd),
+	.enw(fifo_big_delay_2_in_pel_wr),
+	.empty(delay_2_in_pel_empty),
+	.full(fifo_big_delay_2_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor delay_2
+delay actor_delay_2 (
+	// Input Signal(s)
+	.in_pel(delay_2_in_pel_data),
+	.in_pel_rd(delay_2_in_pel_rd),
+	.in_pel_empty(delay_2_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(delay_2_out_pel_data),
+	.out_pel_wr(delay_2_out_pel_wr),
+	.out_pel_full(delay_2_out_pel_full)
 		,
 	
 	// System Signal(s)
@@ -1235,6 +1382,44 @@ sobel_x actor_sobel_x_0 (
 	.out_pel(sobel_x_0_out_pel_data),
 	.out_pel_wr(sobel_x_0_out_pel_wr),
 	.out_pel_full(sobel_x_0_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_delay_3_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_delay_3_in_pel(
+	.datain(fifo_big_delay_3_in_pel_data),
+	.dataout(delay_3_in_pel_data),
+	.enr(delay_3_in_pel_rd),
+	.enw(fifo_big_delay_3_in_pel_wr),
+	.empty(delay_3_in_pel_empty),
+	.full(fifo_big_delay_3_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor delay_3
+delay actor_delay_3 (
+	// Input Signal(s)
+	.in_pel(delay_3_in_pel_data),
+	.in_pel_rd(delay_3_in_pel_rd),
+	.in_pel_empty(delay_3_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(delay_3_out_pel_data),
+	.out_pel_wr(delay_3_out_pel_wr),
+	.out_pel_full(delay_3_out_pel_full)
 		,
 	
 	// System Signal(s)
@@ -1491,158 +1676,6 @@ remove_3x3 actor_remove_3x3_0 (
 
 
 
-// fifo_big_line_buffer_1_real_size
-fifo_big #(
-	.depth(64),
-	.size(6)
-) fifo_big_line_buffer_1_real_size(
-	.datain(fifo_big_line_buffer_1_real_size_data),
-	.dataout(line_buffer_1_real_size_data),
-	.enr(line_buffer_1_real_size_rd),
-	.enw(fifo_big_line_buffer_1_real_size_wr),
-	.empty(line_buffer_1_real_size_empty),
-	.full(fifo_big_line_buffer_1_real_size_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-// fifo_big_line_buffer_1_ext_size
-fifo_big #(
-	.depth(64),
-	.size(6)
-) fifo_big_line_buffer_1_ext_size(
-	.datain(fifo_big_line_buffer_1_ext_size_data),
-	.dataout(line_buffer_1_ext_size_data),
-	.enr(line_buffer_1_ext_size_rd),
-	.enw(fifo_big_line_buffer_1_ext_size_wr),
-	.empty(line_buffer_1_ext_size_empty),
-	.full(fifo_big_line_buffer_1_ext_size_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-// fifo_big_line_buffer_1_in_pel
-fifo_big #(
-	.depth(64),
-	.size(9)
-) fifo_big_line_buffer_1_in_pel(
-	.datain(fifo_big_line_buffer_1_in_pel_data),
-	.dataout(line_buffer_1_in_pel_data),
-	.enr(line_buffer_1_in_pel_rd),
-	.enw(fifo_big_line_buffer_1_in_pel_wr),
-	.empty(line_buffer_1_in_pel_empty),
-	.full(fifo_big_line_buffer_1_in_pel_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-
-// actor line_buffer_1
-line_buffer actor_line_buffer_1 (
-	// Input Signal(s)
-	.real_size(line_buffer_1_real_size_data),
-	.real_size_rd(line_buffer_1_real_size_rd),
-	.real_size_empty(line_buffer_1_real_size_empty),
-	.ext_size(line_buffer_1_ext_size_data),
-	.ext_size_rd(line_buffer_1_ext_size_rd),
-	.ext_size_empty(line_buffer_1_ext_size_empty),
-	.in_pel(line_buffer_1_in_pel_data),
-	.in_pel_rd(line_buffer_1_in_pel_rd),
-	.in_pel_empty(line_buffer_1_in_pel_empty)
-	,
-	
-	// Output Signal(s)
-	.out_pel(line_buffer_1_out_pel_data),
-	.out_pel_wr(line_buffer_1_out_pel_wr),
-	.out_pel_full(line_buffer_1_out_pel_full)
-		,
-	
-	// System Signal(s)
-	.clock(clock),
-	.reset(reset)
-);
-
-
-
-// fifo_big_delay_2_in_pel
-fifo_big #(
-	.depth(64),
-	.size(8)
-) fifo_big_delay_2_in_pel(
-	.datain(fifo_big_delay_2_in_pel_data),
-	.dataout(delay_2_in_pel_data),
-	.enr(delay_2_in_pel_rd),
-	.enw(fifo_big_delay_2_in_pel_wr),
-	.empty(delay_2_in_pel_empty),
-	.full(fifo_big_delay_2_in_pel_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-
-// actor delay_2
-delay actor_delay_2 (
-	// Input Signal(s)
-	.in_pel(delay_2_in_pel_data),
-	.in_pel_rd(delay_2_in_pel_rd),
-	.in_pel_empty(delay_2_in_pel_empty)
-	,
-	
-	// Output Signal(s)
-	.out_pel(delay_2_out_pel_data),
-	.out_pel_wr(delay_2_out_pel_wr),
-	.out_pel_full(delay_2_out_pel_full)
-		,
-	
-	// System Signal(s)
-	.clock(clock),
-	.reset(reset)
-);
-
-
-
-// fifo_big_delay_3_in_pel
-fifo_big #(
-	.depth(64),
-	.size(8)
-) fifo_big_delay_3_in_pel(
-	.datain(fifo_big_delay_3_in_pel_data),
-	.dataout(delay_3_in_pel_data),
-	.enr(delay_3_in_pel_rd),
-	.enw(fifo_big_delay_3_in_pel_wr),
-	.empty(delay_3_in_pel_empty),
-	.full(fifo_big_delay_3_in_pel_full),
-	
-	// System Signal(s)
-	.clk(clock),
-	.rst(reset)
-);
-
-// actor delay_3
-delay actor_delay_3 (
-	// Input Signal(s)
-	.in_pel(delay_3_in_pel_data),
-	.in_pel_rd(delay_3_in_pel_rd),
-	.in_pel_empty(delay_3_in_pel_empty)
-	,
-	
-	// Output Signal(s)
-	.out_pel(delay_3_out_pel_data),
-	.out_pel_wr(delay_3_out_pel_wr),
-	.out_pel_full(delay_3_out_pel_full)
-		,
-	
-	// System Signal(s)
-	.clock(clock),
-	.reset(reset)
-);
-
-
-
 // fifo_big_delay_4_in_pel
 fifo_big #(
 	.depth(64),
@@ -1719,23 +1752,99 @@ delay actor_delay_5 (
 
 
 
+// fifo_big_delay_6_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_delay_6_in_pel(
+	.datain(fifo_big_delay_6_in_pel_data),
+	.dataout(delay_6_in_pel_data),
+	.enr(delay_6_in_pel_rd),
+	.enw(fifo_big_delay_6_in_pel_wr),
+	.empty(delay_6_in_pel_empty),
+	.full(fifo_big_delay_6_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor delay_6
+delay actor_delay_6 (
+	// Input Signal(s)
+	.in_pel(delay_6_in_pel_data),
+	.in_pel_rd(delay_6_in_pel_rd),
+	.in_pel_empty(delay_6_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(delay_6_out_pel_data),
+	.out_pel_wr(delay_6_out_pel_wr),
+	.out_pel_full(delay_6_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
+// fifo_big_delay_7_in_pel
+fifo_big #(
+	.depth(64),
+	.size(8)
+) fifo_big_delay_7_in_pel(
+	.datain(fifo_big_delay_7_in_pel_data),
+	.dataout(delay_7_in_pel_data),
+	.enr(delay_7_in_pel_rd),
+	.enw(fifo_big_delay_7_in_pel_wr),
+	.empty(delay_7_in_pel_empty),
+	.full(fifo_big_delay_7_in_pel_full),
+	
+	// System Signal(s)
+	.clk(clock),
+	.rst(reset)
+);
+
+// actor delay_7
+delay actor_delay_7 (
+	// Input Signal(s)
+	.in_pel(delay_7_in_pel_data),
+	.in_pel_rd(delay_7_in_pel_rd),
+	.in_pel_empty(delay_7_in_pel_empty)
+	,
+	
+	// Output Signal(s)
+	.out_pel(delay_7_out_pel_data),
+	.out_pel_wr(delay_7_out_pel_wr),
+	.out_pel_full(delay_7_out_pel_full)
+		,
+	
+	// System Signal(s)
+	.clock(clock),
+	.reset(reset)
+);
+
+
+
 // actor sbox_0
-sbox1x2 #(
-	.SIZE(8)
+sbox2x1 #(
+	.SIZE(14)
 )
 sbox_0 (
 	// Input Signal(s)
 	.in1_data(sbox_0_in1_data),
 	.in1_wr(sbox_0_in1_wr),
 	.in1_full(sbox_0_in1_full),
+	.in2_data(sbox_0_in2_data),
+	.in2_wr(sbox_0_in2_wr),
+	.in2_full(sbox_0_in2_full),
 	
 	// Output Signal(s)
 	.out1_data(sbox_0_out1_data),
 	.out1_wr(sbox_0_out1_wr),
 	.out1_full(sbox_0_out1_full),
-	.out2_data(sbox_0_out2_data),
-	.out2_wr(sbox_0_out2_wr),
-	.out2_full(sbox_0_out2_full),
 	
 	// Selector
 	.sel(sel[0])	
@@ -1766,7 +1875,7 @@ sbox_1 (
 
 
 // actor sbox_2
-sbox1x2 #(
+sbox2x1 #(
 	.SIZE(8)
 )
 sbox_2 (
@@ -1774,14 +1883,14 @@ sbox_2 (
 	.in1_data(sbox_2_in1_data),
 	.in1_wr(sbox_2_in1_wr),
 	.in1_full(sbox_2_in1_full),
+	.in2_data(sbox_2_in2_data),
+	.in2_wr(sbox_2_in2_wr),
+	.in2_full(sbox_2_in2_full),
 	
 	// Output Signal(s)
 	.out1_data(sbox_2_out1_data),
 	.out1_wr(sbox_2_out1_wr),
 	.out1_full(sbox_2_out1_full),
-	.out2_data(sbox_2_out2_data),
-	.out2_wr(sbox_2_out2_wr),
-	.out2_full(sbox_2_out2_full),
 	
 	// Selector
 	.sel(sel[2])	
@@ -1790,7 +1899,7 @@ sbox_2 (
 
 // actor sbox_3
 sbox1x2 #(
-	.SIZE(8)
+	.SIZE(6)
 )
 sbox_3 (
 	// Input Signal(s)
@@ -1813,7 +1922,7 @@ sbox_3 (
 
 // actor sbox_4
 sbox2x1 #(
-	.SIZE(8)
+	.SIZE(14)
 )
 sbox_4 (
 	// Input Signal(s)
@@ -1836,7 +1945,7 @@ sbox_4 (
 
 // actor sbox_5
 sbox1x2 #(
-	.SIZE(6)
+	.SIZE(8)
 )
 sbox_5 (
 	// Input Signal(s)
@@ -1856,326 +1965,105 @@ sbox_5 (
 	.sel(sel[5])	
 );
 
-
-// actor sbox_6
-sbox2x1 #(
-	.SIZE(6)
-)
-sbox_6 (
-	// Input Signal(s)
-	.in1_data(sbox_6_in1_data),
-	.in1_wr(sbox_6_in1_wr),
-	.in1_full(sbox_6_in1_full),
-	.in2_data(sbox_6_in2_data),
-	.in2_wr(sbox_6_in2_wr),
-	.in2_full(sbox_6_in2_full),
-	
-	// Output Signal(s)
-	.out1_data(sbox_6_out1_data),
-	.out1_wr(sbox_6_out1_wr),
-	.out1_full(sbox_6_out1_full),
-	
-	// Selector
-	.sel(sel[6])	
-);
-
-
-// actor sbox_7
-sbox2x1 #(
-	.SIZE(6)
-)
-sbox_7 (
-	// Input Signal(s)
-	.in1_data(sbox_7_in1_data),
-	.in1_wr(sbox_7_in1_wr),
-	.in1_full(sbox_7_in1_full),
-	.in2_data(sbox_7_in2_data),
-	.in2_wr(sbox_7_in2_wr),
-	.in2_full(sbox_7_in2_full),
-	
-	// Output Signal(s)
-	.out1_data(sbox_7_out1_data),
-	.out1_wr(sbox_7_out1_wr),
-	.out1_full(sbox_7_out1_full),
-	
-	// Selector
-	.sel(sel[7])	
-);
-
-
-// actor sbox_8
-sbox2x1 #(
-	.SIZE(8)
-)
-sbox_8 (
-	// Input Signal(s)
-	.in1_data(sbox_8_in1_data),
-	.in1_wr(sbox_8_in1_wr),
-	.in1_full(sbox_8_in1_full),
-	.in2_data(sbox_8_in2_data),
-	.in2_wr(sbox_8_in2_wr),
-	.in2_full(sbox_8_in2_full),
-	
-	// Output Signal(s)
-	.out1_data(sbox_8_out1_data),
-	.out1_wr(sbox_8_out1_wr),
-	.out1_full(sbox_8_out1_full),
-	
-	// Selector
-	.sel(sel[8])	
-);
-
-
-// actor sbox_9
-sbox1x2 #(
-	.SIZE(8)
-)
-sbox_9 (
-	// Input Signal(s)
-	.in1_data(sbox_9_in1_data),
-	.in1_wr(sbox_9_in1_wr),
-	.in1_full(sbox_9_in1_full),
-	
-	// Output Signal(s)
-	.out1_data(sbox_9_out1_data),
-	.out1_wr(sbox_9_out1_wr),
-	.out1_full(sbox_9_out1_full),
-	.out2_data(sbox_9_out2_data),
-	.out2_wr(sbox_9_out2_wr),
-	.out2_full(sbox_9_out2_full),
-	
-	// Selector
-	.sel(sel[9])	
-);
-
-
-// actor sbox_10
-sbox2x1 #(
-	.SIZE(14)
-)
-sbox_10 (
-	// Input Signal(s)
-	.in1_data(sbox_10_in1_data),
-	.in1_wr(sbox_10_in1_wr),
-	.in1_full(sbox_10_in1_full),
-	.in2_data(sbox_10_in2_data),
-	.in2_wr(sbox_10_in2_wr),
-	.in2_full(sbox_10_in2_full),
-	
-	// Output Signal(s)
-	.out1_data(sbox_10_out1_data),
-	.out1_wr(sbox_10_out1_wr),
-	.out1_full(sbox_10_out1_full),
-	
-	// Selector
-	.sel(sel[10])	
-);
-
-
-// actor sbox_11
-sbox2x1 #(
-	.SIZE(14)
-)
-sbox_11 (
-	// Input Signal(s)
-	.in1_data(sbox_11_in1_data),
-	.in1_wr(sbox_11_in1_wr),
-	.in1_full(sbox_11_in1_full),
-	.in2_data(sbox_11_in2_data),
-	.in2_wr(sbox_11_in2_wr),
-	.in2_full(sbox_11_in2_full),
-	
-	// Output Signal(s)
-	.out1_data(sbox_11_out1_data),
-	.out1_wr(sbox_11_out1_wr),
-	.out1_full(sbox_11_out1_full),
-	
-	// Selector
-	.sel(sel[11])	
-);
-
-
-// actor sbox_12
-sbox2x1 #(
-	.SIZE(8)
-)
-sbox_12 (
-	// Input Signal(s)
-	.in1_data(sbox_12_in1_data),
-	.in1_wr(sbox_12_in1_wr),
-	.in1_full(sbox_12_in1_full),
-	.in2_data(sbox_12_in2_data),
-	.in2_wr(sbox_12_in2_wr),
-	.in2_full(sbox_12_in2_full),
-	
-	// Output Signal(s)
-	.out1_data(sbox_12_out1_data),
-	.out1_wr(sbox_12_out1_wr),
-	.out1_full(sbox_12_out1_full),
-	
-	// Selector
-	.sel(sel[12])	
-);
-
-
-// actor sbox_13
-sbox2x1 #(
-	.SIZE(8)
-)
-sbox_13 (
-	// Input Signal(s)
-	.in1_data(sbox_13_in1_data),
-	.in1_wr(sbox_13_in1_wr),
-	.in1_full(sbox_13_in1_full),
-	.in2_data(sbox_13_in2_data),
-	.in2_wr(sbox_13_in2_wr),
-	.in2_full(sbox_13_in2_full),
-	
-	// Output Signal(s)
-	.out1_data(sbox_13_out1_data),
-	.out1_wr(sbox_13_out1_wr),
-	.out1_full(sbox_13_out1_full),
-	
-	// Selector
-	.sel(sel[13])	
-);
-
 // Module(s) Assignments
-assign fifo_big_roberts_x_0_pel11_data = sbox_0_out1_data;
-assign fifo_big_roberts_x_0_pel11_wr = sbox_0_out1_wr;
-assign sbox_0_out1_full =
-fifo_big_roberts_x_0_pel11_full || 
-sbox_4_in1_full || 
-sbox_8_in1_full || 
-fifo_big_roberts_y_0_pel11_full 
-;
+assign sbox_0_in1_data = roberts_x_0_out_pel_data;
+assign sbox_0_in1_wr = roberts_x_0_out_pel_wr;
+assign roberts_x_0_out_pel_full = sbox_0_in1_full;
 
-assign fifo_big_roberts_x_0_pel10_data = sbox_1_out1_data;
-assign fifo_big_roberts_x_0_pel10_wr = sbox_1_out1_wr;
+assign fifo_big_delay_0_in_pel_data = sbox_1_out1_data;
+assign fifo_big_delay_0_in_pel_wr = sbox_1_out1_wr;
 assign sbox_1_out1_full =
-fifo_big_roberts_x_0_pel10_full || 
-fifo_big_roberts_y_0_pel10_full 
+fifo_big_delay_0_in_pel_full || 
+fifo_big_line_buffer_0_in_pel_full || 
+fifo_big_roberts_y_0_pel11_full || 
+fifo_big_roberts_x_0_pel11_full 
 ;
 
-assign fifo_big_roberts_x_0_pel01_data = sbox_2_out1_data;
-assign fifo_big_roberts_x_0_pel01_wr = sbox_2_out1_wr;
-assign sbox_2_out1_full =
-fifo_big_roberts_x_0_pel01_full || 
+assign fifo_big_roberts_x_0_pel11_data = sbox_1_out1_data;
+assign fifo_big_roberts_x_0_pel11_wr = sbox_1_out1_wr;
+
+assign fifo_big_roberts_y_0_pel00_data = delay_1_out_pel_data;
+assign fifo_big_roberts_y_0_pel00_wr = delay_1_out_pel_wr;
+assign delay_1_out_pel_full =
+fifo_big_roberts_y_0_pel00_full || 
+fifo_big_roberts_x_0_pel00_full 
+;
+
+assign fifo_big_roberts_y_0_pel10_data = delay_0_out_pel_data;
+assign fifo_big_roberts_y_0_pel10_wr = delay_0_out_pel_wr;
+assign delay_0_out_pel_full =
+fifo_big_roberts_y_0_pel10_full || 
+fifo_big_roberts_x_0_pel10_full 
+;
+
+assign sbox_2_in1_data = remove_2x2_0_out_pel_data;
+assign sbox_2_in1_wr = remove_2x2_0_out_pel_wr;
+assign remove_2x2_0_out_pel_full = sbox_2_in1_full;
+
+assign fifo_big_delay_1_in_pel_data = line_buffer_0_out_pel_data;
+assign fifo_big_delay_1_in_pel_wr = line_buffer_0_out_pel_wr;
+assign line_buffer_0_out_pel_full =
+fifo_big_delay_1_in_pel_full || 
 fifo_big_roberts_y_0_pel01_full || 
-sbox_12_in1_full 
+fifo_big_roberts_x_0_pel01_full 
 ;
 
-assign fifo_big_roberts_x_0_pel00_data = sbox_3_out1_data;
-assign fifo_big_roberts_x_0_pel00_wr = sbox_3_out1_wr;
+assign fifo_big_roberts_y_0_pel01_data = line_buffer_0_out_pel_data;
+assign fifo_big_roberts_y_0_pel01_wr = line_buffer_0_out_pel_wr;
+
+assign fifo_big_line_buffer_0_ext_size_data = sbox_3_out1_data;
+assign fifo_big_line_buffer_0_ext_size_wr = sbox_3_out1_wr;
 assign sbox_3_out1_full =
-fifo_big_roberts_x_0_pel00_full || 
-fifo_big_roberts_y_0_pel00_full 
+fifo_big_remove_2x2_0_in_size_full || 
+fifo_big_line_buffer_0_real_size_full || 
+fifo_big_line_buffer_0_ext_size_full 
 ;
 
-assign sbox_4_in1_data = sbox_0_out1_data;
-assign sbox_4_in1_wr = sbox_0_out1_wr;
+assign fifo_big_line_buffer_0_in_pel_data = sbox_1_out1_data;
+assign fifo_big_line_buffer_0_in_pel_wr = sbox_1_out1_wr;
 
-assign sbox_6_in1_data = sbox_5_out1_data;
-assign sbox_6_in1_wr = sbox_5_out1_wr;
-assign sbox_5_out1_full =
-sbox_6_in1_full || 
-sbox_7_in1_full || 
-fifo_big_remove_2x2_0_in_size_full 
-;
+assign fifo_big_line_buffer_0_real_size_data = sbox_3_out1_data;
+assign fifo_big_line_buffer_0_real_size_wr = sbox_3_out1_wr;
 
-assign sbox_7_in1_data = sbox_5_out1_data;
-assign sbox_7_in1_wr = sbox_5_out1_wr;
+assign fifo_big_roberts_x_0_pel10_data = delay_0_out_pel_data;
+assign fifo_big_roberts_x_0_pel10_wr = delay_0_out_pel_wr;
 
-assign sbox_8_in1_data = sbox_0_out1_data;
-assign sbox_8_in1_wr = sbox_0_out1_wr;
+assign fifo_big_remove_2x2_0_in_size_data = sbox_3_out1_data;
+assign fifo_big_remove_2x2_0_in_size_wr = sbox_3_out1_wr;
 
-assign fifo_big_roberts_y_0_pel01_data = sbox_2_out1_data;
-assign fifo_big_roberts_y_0_pel01_wr = sbox_2_out1_wr;
+assign fifo_big_roberts_x_0_pel00_data = delay_1_out_pel_data;
+assign fifo_big_roberts_x_0_pel00_wr = delay_1_out_pel_wr;
 
-assign fifo_big_roberts_y_0_pel00_data = sbox_3_out1_data;
-assign fifo_big_roberts_y_0_pel00_wr = sbox_3_out1_wr;
-
-assign fifo_big_roberts_y_0_pel10_data = sbox_1_out1_data;
-assign fifo_big_roberts_y_0_pel10_wr = sbox_1_out1_wr;
-
-assign fifo_big_roberts_y_0_pel11_data = sbox_0_out1_data;
-assign fifo_big_roberts_y_0_pel11_wr = sbox_0_out1_wr;
-
-assign fifo_big_remove_2x2_0_in_pel_data = sbox_9_out1_data;
-assign fifo_big_remove_2x2_0_in_pel_wr = sbox_9_out1_wr;
-assign sbox_9_out1_full = fifo_big_remove_2x2_0_in_pel_full;
-
-assign fifo_big_remove_2x2_0_in_size_data = sbox_5_out1_data;
-assign fifo_big_remove_2x2_0_in_size_wr = sbox_5_out1_wr;
-
-assign sbox_10_in1_data = roberts_x_0_out_pel_data;
-assign sbox_10_in1_wr = roberts_x_0_out_pel_wr;
-assign roberts_x_0_out_pel_full = sbox_10_in1_full;
-
-assign sbox_11_in1_data = roberts_y_0_out_pel_data;
-assign sbox_11_in1_wr = roberts_y_0_out_pel_wr;
-assign roberts_y_0_out_pel_full = sbox_11_in1_full;
-
-assign sbox_12_in1_data = sbox_2_out1_data;
-assign sbox_12_in1_wr = sbox_2_out1_wr;
-
-assign sbox_13_in1_data = remove_2x2_0_out_pel_data;
-assign sbox_13_in1_wr = remove_2x2_0_out_pel_wr;
-assign remove_2x2_0_out_pel_full = sbox_13_in1_full;
+assign fifo_big_roberts_y_0_pel11_data = sbox_1_out1_data;
+assign fifo_big_roberts_y_0_pel11_wr = sbox_1_out1_wr;
 
 assign fifo_big_thr_0_in_g_data = abs_sum_0_out_g_data;
 assign fifo_big_thr_0_in_g_wr = abs_sum_0_out_g_wr;
 assign abs_sum_0_out_g_full = fifo_big_thr_0_in_g_full;
 
-assign sbox_0_in1_data = in_pel_data;
-assign sbox_0_in1_wr = in_pel_wr;
-assign in_pel_full = sbox_0_in1_full;
+assign fifo_big_roberts_x_0_pel01_data = line_buffer_0_out_pel_data;
+assign fifo_big_roberts_x_0_pel01_wr = line_buffer_0_out_pel_wr;
 
-assign fifo_big_sobel_x_0_pel22_data = sbox_0_out2_data;
-assign fifo_big_sobel_x_0_pel22_wr = sbox_0_out2_wr;
-assign sbox_0_out2_full =
-sbox_4_in2_full || 
-sbox_8_in2_full || 
-fifo_big_sobel_y_0_pel22_full || 
-fifo_big_sobel_x_0_pel22_full 
-;
+assign sbox_4_in1_data = roberts_y_0_out_pel_data;
+assign sbox_4_in1_wr = roberts_y_0_out_pel_wr;
+assign roberts_y_0_out_pel_full = sbox_4_in1_full;
 
-assign sbox_1_in1_data = delay_0_out_pel_data;
-assign sbox_1_in1_wr = delay_0_out_pel_wr;
-assign delay_0_out_pel_full = sbox_1_in1_full;
+assign fifo_big_remove_2x2_0_in_pel_data = sbox_5_out1_data;
+assign fifo_big_remove_2x2_0_in_pel_wr = sbox_5_out1_wr;
+assign sbox_5_out1_full = fifo_big_remove_2x2_0_in_pel_full;
 
-assign fifo_big_sobel_x_0_pel21_data = sbox_1_out2_data;
-assign fifo_big_sobel_x_0_pel21_wr = sbox_1_out2_wr;
-assign sbox_1_out2_full =
-fifo_big_sobel_y_0_pel21_full || 
-fifo_big_delay_2_in_pel_full || 
-fifo_big_sobel_x_0_pel21_full 
-;
-
-assign sbox_2_in1_data = line_buffer_0_out_pel_data;
-assign sbox_2_in1_wr = line_buffer_0_out_pel_wr;
-assign line_buffer_0_out_pel_full = sbox_2_in1_full;
-
-assign fifo_big_sobel_x_0_pel12_data = sbox_2_out2_data;
-assign fifo_big_sobel_x_0_pel12_wr = sbox_2_out2_wr;
-assign sbox_2_out2_full =
-sbox_12_in2_full || 
-fifo_big_sobel_y_0_pel12_full || 
-fifo_big_line_buffer_1_in_pel_full || 
-fifo_big_sobel_x_0_pel12_full 
-;
-
-assign sbox_3_in1_data = delay_1_out_pel_data;
-assign sbox_3_in1_wr = delay_1_out_pel_wr;
-assign delay_1_out_pel_full = sbox_3_in1_full;
-
-assign fifo_big_sobel_x_0_pel11_data = sbox_3_out2_data;
-assign fifo_big_sobel_x_0_pel11_wr = sbox_3_out2_wr;
+assign fifo_big_line_buffer_1_real_size_data = sbox_3_out2_data;
+assign fifo_big_line_buffer_1_real_size_wr = sbox_3_out2_wr;
 assign sbox_3_out2_full =
-fifo_big_sobel_y_0_pel11_full || 
-fifo_big_delay_3_in_pel_full || 
-fifo_big_sobel_x_0_pel11_full 
+fifo_big_line_buffer_2_real_size_full || 
+fifo_big_line_buffer_1_ext_size_full || 
+fifo_big_line_buffer_2_ext_size_full || 
+fifo_big_remove_3x3_0_in_size_full || 
+fifo_big_line_buffer_1_real_size_full 
 ;
+
+assign fifo_big_line_buffer_2_real_size_data = sbox_3_out2_data;
+assign fifo_big_line_buffer_2_real_size_wr = sbox_3_out2_wr;
 
 assign fifo_big_sobel_x_0_pel20_data = delay_2_out_pel_data;
 assign fifo_big_sobel_x_0_pel20_wr = delay_2_out_pel_wr;
@@ -2184,163 +2072,168 @@ fifo_big_sobel_x_0_pel20_full ||
 fifo_big_sobel_y_0_pel20_full 
 ;
 
-assign fifo_big_sobel_x_0_pel10_data = delay_3_out_pel_data;
-assign fifo_big_sobel_x_0_pel10_wr = delay_3_out_pel_wr;
+assign fifo_big_sobel_y_0_pel00_data = delay_3_out_pel_data;
+assign fifo_big_sobel_y_0_pel00_wr = delay_3_out_pel_wr;
 assign delay_3_out_pel_full =
-fifo_big_sobel_x_0_pel10_full || 
-fifo_big_sobel_y_0_pel10_full 
+fifo_big_sobel_y_0_pel00_full || 
+fifo_big_sobel_x_0_pel00_full 
 ;
-
-assign fifo_big_sobel_x_0_pel00_data = delay_5_out_pel_data;
-assign fifo_big_sobel_x_0_pel00_wr = delay_5_out_pel_wr;
-assign delay_5_out_pel_full =
-fifo_big_sobel_x_0_pel00_full || 
-fifo_big_sobel_y_0_pel00_full 
-;
-
-assign fifo_big_sobel_x_0_pel01_data = delay_4_out_pel_data;
-assign fifo_big_sobel_x_0_pel01_wr = delay_4_out_pel_wr;
-assign delay_4_out_pel_full =
-fifo_big_sobel_x_0_pel01_full || 
-fifo_big_sobel_y_0_pel01_full || 
-fifo_big_delay_5_in_pel_full 
-;
-
-assign fifo_big_sobel_x_0_pel02_data = line_buffer_1_out_pel_data;
-assign fifo_big_sobel_x_0_pel02_wr = line_buffer_1_out_pel_wr;
-assign line_buffer_1_out_pel_full =
-fifo_big_sobel_x_0_pel02_full || 
-fifo_big_sobel_y_0_pel02_full || 
-fifo_big_delay_4_in_pel_full 
-;
-
-assign fifo_big_delay_0_in_pel_data = sbox_4_out1_data;
-assign fifo_big_delay_0_in_pel_wr = sbox_4_out1_wr;
-assign sbox_4_out1_full = fifo_big_delay_0_in_pel_full;
-
-assign sbox_4_in2_data = sbox_0_out2_data;
-assign sbox_4_in2_wr = sbox_0_out2_wr;
-
-assign sbox_5_in1_data = in_size_data;
-assign sbox_5_in1_wr = in_size_wr;
-assign in_size_full = sbox_5_in1_full;
-
-assign fifo_big_line_buffer_0_ext_size_data = sbox_6_out1_data;
-assign fifo_big_line_buffer_0_ext_size_wr = sbox_6_out1_wr;
-assign sbox_6_out1_full = fifo_big_line_buffer_0_ext_size_full;
-
-assign sbox_6_in2_data = sbox_5_out2_data;
-assign sbox_6_in2_wr = sbox_5_out2_wr;
-assign sbox_5_out2_full =
-sbox_7_in2_full || 
-fifo_big_remove_3x3_0_in_size_full || 
-fifo_big_line_buffer_1_real_size_full || 
-fifo_big_line_buffer_1_ext_size_full || 
-sbox_6_in2_full 
-;
-
-assign fifo_big_line_buffer_0_real_size_data = sbox_7_out1_data;
-assign fifo_big_line_buffer_0_real_size_wr = sbox_7_out1_wr;
-assign sbox_7_out1_full = fifo_big_line_buffer_0_real_size_full;
-
-assign sbox_7_in2_data = sbox_5_out2_data;
-assign sbox_7_in2_wr = sbox_5_out2_wr;
-
-assign fifo_big_line_buffer_0_in_pel_data = sbox_8_out1_data;
-assign fifo_big_line_buffer_0_in_pel_wr = sbox_8_out1_wr;
-assign sbox_8_out1_full = fifo_big_line_buffer_0_in_pel_full;
-
-assign sbox_8_in2_data = sbox_0_out2_data;
-assign sbox_8_in2_wr = sbox_0_out2_wr;
-
-assign fifo_big_sobel_y_0_pel12_data = sbox_2_out2_data;
-assign fifo_big_sobel_y_0_pel12_wr = sbox_2_out2_wr;
-
-assign fifo_big_sobel_y_0_pel11_data = sbox_3_out2_data;
-assign fifo_big_sobel_y_0_pel11_wr = sbox_3_out2_wr;
-
-assign fifo_big_sobel_y_0_pel21_data = sbox_1_out2_data;
-assign fifo_big_sobel_y_0_pel21_wr = sbox_1_out2_wr;
-
-assign fifo_big_sobel_y_0_pel22_data = sbox_0_out2_data;
-assign fifo_big_sobel_y_0_pel22_wr = sbox_0_out2_wr;
 
 assign fifo_big_sobel_y_0_pel20_data = delay_2_out_pel_data;
 assign fifo_big_sobel_y_0_pel20_wr = delay_2_out_pel_wr;
 
-assign fifo_big_sobel_y_0_pel10_data = delay_3_out_pel_data;
-assign fifo_big_sobel_y_0_pel10_wr = delay_3_out_pel_wr;
+assign fifo_big_remove_3x3_0_in_size_data = sbox_3_out2_data;
+assign fifo_big_remove_3x3_0_in_size_wr = sbox_3_out2_wr;
 
-assign fifo_big_sobel_y_0_pel00_data = delay_5_out_pel_data;
-assign fifo_big_sobel_y_0_pel00_wr = delay_5_out_pel_wr;
+assign fifo_big_sobel_y_0_pel10_data = delay_4_out_pel_data;
+assign fifo_big_sobel_y_0_pel10_wr = delay_4_out_pel_wr;
+assign delay_4_out_pel_full =
+fifo_big_sobel_y_0_pel10_full || 
+fifo_big_sobel_x_0_pel10_full 
+;
 
-assign fifo_big_sobel_y_0_pel01_data = delay_4_out_pel_data;
-assign fifo_big_sobel_y_0_pel01_wr = delay_4_out_pel_wr;
+assign sbox_0_in2_data = sobel_x_0_out_pel_data;
+assign sbox_0_in2_wr = sobel_x_0_out_pel_wr;
+assign sobel_x_0_out_pel_full = sbox_0_in2_full;
+
+assign fifo_big_sobel_y_0_pel01_data = delay_5_out_pel_data;
+assign fifo_big_sobel_y_0_pel01_wr = delay_5_out_pel_wr;
+assign delay_5_out_pel_full =
+fifo_big_sobel_y_0_pel01_full || 
+fifo_big_delay_3_in_pel_full || 
+fifo_big_sobel_x_0_pel01_full 
+;
+
+assign fifo_big_sobel_y_0_pel22_data = sbox_1_out2_data;
+assign fifo_big_sobel_y_0_pel22_wr = sbox_1_out2_wr;
+assign sbox_1_out2_full =
+fifo_big_sobel_x_0_pel22_full || 
+fifo_big_sobel_y_0_pel22_full || 
+fifo_big_delay_6_in_pel_full || 
+fifo_big_line_buffer_2_in_pel_full 
+;
+
+assign fifo_big_line_buffer_1_in_pel_data = line_buffer_2_out_pel_data;
+assign fifo_big_line_buffer_1_in_pel_wr = line_buffer_2_out_pel_wr;
+assign line_buffer_2_out_pel_full =
+fifo_big_line_buffer_1_in_pel_full || 
+fifo_big_sobel_x_0_pel12_full || 
+fifo_big_sobel_y_0_pel12_full || 
+fifo_big_delay_7_in_pel_full 
+;
+
+assign fifo_big_delay_5_in_pel_data = line_buffer_1_out_pel_data;
+assign fifo_big_delay_5_in_pel_wr = line_buffer_1_out_pel_wr;
+assign line_buffer_1_out_pel_full =
+fifo_big_delay_5_in_pel_full || 
+fifo_big_sobel_x_0_pel02_full || 
+fifo_big_sobel_y_0_pel02_full 
+;
+
+assign fifo_big_sobel_x_0_pel21_data = delay_6_out_pel_data;
+assign fifo_big_sobel_x_0_pel21_wr = delay_6_out_pel_wr;
+assign delay_6_out_pel_full =
+fifo_big_sobel_x_0_pel21_full || 
+fifo_big_sobel_y_0_pel21_full || 
+fifo_big_delay_2_in_pel_full 
+;
+
+assign fifo_big_sobel_x_0_pel12_data = line_buffer_2_out_pel_data;
+assign fifo_big_sobel_x_0_pel12_wr = line_buffer_2_out_pel_wr;
+
+assign fifo_big_sobel_x_0_pel00_data = delay_3_out_pel_data;
+assign fifo_big_sobel_x_0_pel00_wr = delay_3_out_pel_wr;
+
+assign fifo_big_sobel_x_0_pel02_data = line_buffer_1_out_pel_data;
+assign fifo_big_sobel_x_0_pel02_wr = line_buffer_1_out_pel_wr;
+
+assign fifo_big_sobel_y_0_pel21_data = delay_6_out_pel_data;
+assign fifo_big_sobel_y_0_pel21_wr = delay_6_out_pel_wr;
+
+assign fifo_big_line_buffer_2_in_pel_data = sbox_1_out2_data;
+assign fifo_big_line_buffer_2_in_pel_wr = sbox_1_out2_wr;
+
+assign fifo_big_delay_3_in_pel_data = delay_5_out_pel_data;
+assign fifo_big_delay_3_in_pel_wr = delay_5_out_pel_wr;
+
+assign fifo_big_sobel_y_0_pel11_data = delay_7_out_pel_data;
+assign fifo_big_sobel_y_0_pel11_wr = delay_7_out_pel_wr;
+assign delay_7_out_pel_full =
+fifo_big_sobel_y_0_pel11_full || 
+fifo_big_delay_4_in_pel_full || 
+fifo_big_sobel_x_0_pel11_full 
+;
+
+assign fifo_big_delay_4_in_pel_data = delay_7_out_pel_data;
+assign fifo_big_delay_4_in_pel_wr = delay_7_out_pel_wr;
+
+assign fifo_big_line_buffer_1_ext_size_data = sbox_3_out2_data;
+assign fifo_big_line_buffer_1_ext_size_wr = sbox_3_out2_wr;
 
 assign fifo_big_sobel_y_0_pel02_data = line_buffer_1_out_pel_data;
 assign fifo_big_sobel_y_0_pel02_wr = line_buffer_1_out_pel_wr;
 
-assign sbox_9_in1_data = thr_0_out_pel_data;
-assign sbox_9_in1_wr = thr_0_out_pel_wr;
-assign thr_0_out_pel_full = sbox_9_in1_full;
+assign fifo_big_sobel_x_0_pel22_data = sbox_1_out2_data;
+assign fifo_big_sobel_x_0_pel22_wr = sbox_1_out2_wr;
 
-assign fifo_big_remove_3x3_0_in_pel_data = sbox_9_out2_data;
-assign fifo_big_remove_3x3_0_in_pel_wr = sbox_9_out2_wr;
-assign sbox_9_out2_full = fifo_big_remove_3x3_0_in_pel_full;
+assign fifo_big_sobel_x_0_pel10_data = delay_4_out_pel_data;
+assign fifo_big_sobel_x_0_pel10_wr = delay_4_out_pel_wr;
 
-assign fifo_big_remove_3x3_0_in_size_data = sbox_5_out2_data;
-assign fifo_big_remove_3x3_0_in_size_wr = sbox_5_out2_wr;
+assign fifo_big_sobel_x_0_pel11_data = delay_7_out_pel_data;
+assign fifo_big_sobel_x_0_pel11_wr = delay_7_out_pel_wr;
 
-assign fifo_big_line_buffer_1_in_pel_data = sbox_2_out2_data;
-assign fifo_big_line_buffer_1_in_pel_wr = sbox_2_out2_wr;
+assign sbox_4_in2_data = sobel_y_0_out_pel_data;
+assign sbox_4_in2_wr = sobel_y_0_out_pel_wr;
+assign sobel_y_0_out_pel_full = sbox_4_in2_full;
 
-assign fifo_big_line_buffer_1_real_size_data = sbox_5_out2_data;
-assign fifo_big_line_buffer_1_real_size_wr = sbox_5_out2_wr;
+assign fifo_big_remove_3x3_0_in_pel_data = sbox_5_out2_data;
+assign fifo_big_remove_3x3_0_in_pel_wr = sbox_5_out2_wr;
+assign sbox_5_out2_full = fifo_big_remove_3x3_0_in_pel_full;
 
-assign fifo_big_line_buffer_1_ext_size_data = sbox_5_out2_data;
-assign fifo_big_line_buffer_1_ext_size_wr = sbox_5_out2_wr;
+assign fifo_big_sobel_y_0_pel12_data = line_buffer_2_out_pel_data;
+assign fifo_big_sobel_y_0_pel12_wr = line_buffer_2_out_pel_wr;
 
-assign fifo_big_abs_sum_0_in_gx_data = sbox_10_out1_data;
-assign fifo_big_abs_sum_0_in_gx_wr = sbox_10_out1_wr;
-assign sbox_10_out1_full = fifo_big_abs_sum_0_in_gx_full;
+assign fifo_big_delay_6_in_pel_data = sbox_1_out2_data;
+assign fifo_big_delay_6_in_pel_wr = sbox_1_out2_wr;
 
-assign sbox_10_in2_data = sobel_x_0_out_pel_data;
-assign sbox_10_in2_wr = sobel_x_0_out_pel_wr;
-assign sobel_x_0_out_pel_full = sbox_10_in2_full;
+assign fifo_big_delay_7_in_pel_data = line_buffer_2_out_pel_data;
+assign fifo_big_delay_7_in_pel_wr = line_buffer_2_out_pel_wr;
 
-assign fifo_big_abs_sum_0_in_gy_data = sbox_11_out1_data;
-assign fifo_big_abs_sum_0_in_gy_wr = sbox_11_out1_wr;
-assign sbox_11_out1_full = fifo_big_abs_sum_0_in_gy_full;
+assign sbox_2_in2_data = remove_3x3_0_out_pel_data;
+assign sbox_2_in2_wr = remove_3x3_0_out_pel_wr;
+assign remove_3x3_0_out_pel_full = sbox_2_in2_full;
 
-assign sbox_11_in2_data = sobel_y_0_out_pel_data;
-assign sbox_11_in2_wr = sobel_y_0_out_pel_wr;
-assign sobel_y_0_out_pel_full = sbox_11_in2_full;
+assign fifo_big_sobel_x_0_pel01_data = delay_5_out_pel_data;
+assign fifo_big_sobel_x_0_pel01_wr = delay_5_out_pel_wr;
 
-assign fifo_big_delay_2_in_pel_data = sbox_1_out2_data;
-assign fifo_big_delay_2_in_pel_wr = sbox_1_out2_wr;
+assign fifo_big_line_buffer_2_ext_size_data = sbox_3_out2_data;
+assign fifo_big_line_buffer_2_ext_size_wr = sbox_3_out2_wr;
 
-assign fifo_big_delay_1_in_pel_data = sbox_12_out1_data;
-assign fifo_big_delay_1_in_pel_wr = sbox_12_out1_wr;
-assign sbox_12_out1_full = fifo_big_delay_1_in_pel_full;
+assign fifo_big_delay_2_in_pel_data = delay_6_out_pel_data;
+assign fifo_big_delay_2_in_pel_wr = delay_6_out_pel_wr;
 
-assign sbox_12_in2_data = sbox_2_out2_data;
-assign sbox_12_in2_wr = sbox_2_out2_wr;
+assign sbox_3_in1_data = in_size_data;
+assign sbox_3_in1_wr = in_size_wr;
+assign in_size_full = sbox_3_in1_full;
 
-assign out_pel_data = sbox_13_out1_data;
-assign out_pel_wr = sbox_13_out1_wr;
-assign sbox_13_out1_full = out_pel_full;
+assign sbox_5_in1_data = thr_0_out_pel_data;
+assign sbox_5_in1_wr = thr_0_out_pel_wr;
+assign thr_0_out_pel_full = sbox_5_in1_full;
 
-assign sbox_13_in2_data = remove_3x3_0_out_pel_data;
-assign sbox_13_in2_wr = remove_3x3_0_out_pel_wr;
-assign remove_3x3_0_out_pel_full = sbox_13_in2_full;
+assign sbox_1_in1_data = in_pel_data;
+assign sbox_1_in1_wr = in_pel_wr;
+assign in_pel_full = sbox_1_in1_full;
 
-assign fifo_big_delay_4_in_pel_data = line_buffer_1_out_pel_data;
-assign fifo_big_delay_4_in_pel_wr = line_buffer_1_out_pel_wr;
+assign fifo_big_abs_sum_0_in_gx_data = sbox_0_out1_data;
+assign fifo_big_abs_sum_0_in_gx_wr = sbox_0_out1_wr;
+assign sbox_0_out1_full = fifo_big_abs_sum_0_in_gx_full;
 
-assign fifo_big_delay_3_in_pel_data = sbox_3_out2_data;
-assign fifo_big_delay_3_in_pel_wr = sbox_3_out2_wr;
+assign fifo_big_abs_sum_0_in_gy_data = sbox_4_out1_data;
+assign fifo_big_abs_sum_0_in_gy_wr = sbox_4_out1_wr;
+assign sbox_4_out1_full = fifo_big_abs_sum_0_in_gy_full;
 
-assign fifo_big_delay_5_in_pel_data = delay_4_out_pel_data;
-assign fifo_big_delay_5_in_pel_wr = delay_4_out_pel_wr;
+assign out_pel_data = sbox_2_out1_data;
+assign out_pel_wr = sbox_2_out1_wr;
+assign sbox_2_out1_full = out_pel_full;
 
 endmodule

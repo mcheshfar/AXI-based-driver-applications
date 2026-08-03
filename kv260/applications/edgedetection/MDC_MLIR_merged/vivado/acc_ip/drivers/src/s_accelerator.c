@@ -1,12 +1,12 @@
 /*****************************************************************************
 *  Filename:          s_accelerator.c
 *  Description:       Stream Accelerator Driver
-*  Date:              2026/07/25 15:38:30 (by Multi-Dataflow Composer - Platform Composer)
+*  Date:              2026/08/03 11:26:13 (by Multi-Dataflow Composer - Platform Composer)
 *****************************************************************************/
 
 #include "s_accelerator.h"
 
-int s_accelerator_top1(
+int s_accelerator_top5(
 	// port out0
 	int size_out0, int* data_out0,
 	// port in1

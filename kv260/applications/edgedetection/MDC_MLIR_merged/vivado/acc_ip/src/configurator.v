@@ -2,7 +2,7 @@
 //
 // Multi-Dataflow Composer tool - Platform Composer
 // Configurator module 
-// Date: 2026/07/23 16:24:02
+// Date: 2026/08/03 11:26:13
 //
 // ----------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ reg [5:0] sel;
 // case ID
 always@(ID)
 case(ID)
-8'd1:    begin    // Robrts
+8'd1:    begin    // top1
 sel[0]=1'b1;
 sel[1]=1'b1;
 sel[2]=1'b1;
@@ -44,7 +44,7 @@ sel[3]=1'b1;
 sel[4]=1'b1;
 sel[5]=1'b1;
 end
-8'd2:    begin    // Sobel
+8'd2:    begin    // top2
 sel[0]=1'b0;
 sel[1]=1'b0;
 sel[2]=1'b0;
